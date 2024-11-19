@@ -3,4 +3,16 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="current_weekly_streak">Current Weekly Streak</string>
+    <string name="weekly_streak_description">Track your fitness today to get another streak</string>
+    <string name="your_activity">Your Activity</string>
+    <string name="fit_group_track">Fit Group Track</string>
+    <string name="recent">Recent</string>
+    <string name="pr_s_history">PR\'s History</string>
+    <string name="following">Following</string>
+    <string-array name="home_dropdown_options">
+        <item>HOME</item>
+        <item>FOLLOWING</item>
+        <item>PR HISTORY</item>
+    </string-array>
 </resources>
