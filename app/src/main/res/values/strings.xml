@@ -14,6 +14,13 @@
     <string name="testing_routine_part">Testing routine part</string>
     <string name="testing_following">Testing Following</string>
     <string name="testing_prhistory">Testing prhistory</string>
+    <string name="leg_day">Leg Day</string>
+    <string name="time">Time</string>
+    <string name="volume">Volume</string>
+    <string name="workout">Workout</string>
+    <string name="_0_likes">0 likes</string>
+    <string name="_0_comments">0 comments</string>
+    <string name="like">LIKE</string>
     <string-array name="home_dropdown_options">
         <item>HOME</item>
         <item>FOLLOWING</item>

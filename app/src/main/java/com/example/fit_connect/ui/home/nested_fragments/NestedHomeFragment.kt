@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.anychart.AnyChart
-import com.anychart.scales.Ordinal
 import com.anychart.AnyChartView
 import com.anychart.chart.common.dataentry.ValueDataEntry
 import com.anychart.charts.Cartesian
@@ -14,9 +13,9 @@ import com.anychart.core.cartesian.series.Line
 import com.anychart.enums.LegendLayout
 import com.anychart.enums.MarkerType
 import com.anychart.enums.TooltipPositionMode
-import com.anychart.scales.Linear
 import com.example.fit_connect.R
 import com.example.fit_connect.databinding.FragmentNestedHomeBinding
+import com.example.fit_connect.ui.home.nested_fragments.listadapters.PRListAdapter
 
 
 class NestedHomeFragment: Fragment() {
