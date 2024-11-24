@@ -21,7 +21,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     val weeklyRecords: LiveData<List<WorkoutRecord>> get() = _weeklyRecords
 
     init {
-        addFakeData() // Load fake data when ViewModel initializes
+        addFakeData()
     }
 
     fun loadWeeklyRecords(startDate: Long, endDate: Long) {
@@ -34,7 +34,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun addFakeData() {
         viewModelScope.launch(Dispatchers.IO) {
-            // Mock data for the past 7 days
+
             val fakeData = listOf(
                 WorkoutRecord(date = System.currentTimeMillis(), duration = 60, volume = 5000, reps = 100),
                 WorkoutRecord(date = System.currentTimeMillis() - 86400000, duration = 45, volume = 3000, reps = 80),
