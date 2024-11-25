@@ -3,4 +3,30 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="current_weekly_streak">Current Weekly Streak</string>
+    <string name="weekly_streak_description">Track your fitness today to get another streak</string>
+    <string name="your_activity">Your Activity</string>
+    <string name="fit_group_track">Fit Group Track</string>
+    <string name="recent">Recent</string>
+    <string name="pr_s_history">PR\'s History</string>
+    <string name="following">Following</string>
+    <string name="testing_text_routine">Testing text routine</string>
+    <string name="testing_routine_part">Testing routine part</string>
+    <string name="testing_following">Testing Following</string>
+    <string name="testing_prhistory">Testing prhistory</string>
+    <string name="leg_day">Leg Day</string>
+    <string name="time">Time</string>
+    <string name="volume">Volume</string>
+    <string name="workout">Workout</string>
+    <string name="_0_likes">0 likes</string>
+    <string name="_0_comments">0 comments</string>
+    <string name="like">LIKE</string>
+    <string name="add_a_comment">Add a comment .......</string>
+    <string name="post">Post</string>
+    <string-array name="home_dropdown_options">
+        <item>HOME</item>
+        <item>FOLLOWING</item>
+        <item>PR HISTORY</item>
+    </string-array>
+    <string name="Profile">Profile</string>
 </resources>

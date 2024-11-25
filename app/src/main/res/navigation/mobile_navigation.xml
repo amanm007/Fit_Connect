@@ -15,11 +15,33 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.fit_connect.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
+
+        <!-- Action to navigate to ExercisesFragment -->
+        <action
+            android:id="@+id/action_dashboardFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.fit_connect.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_profile"
+        android:name="com.example.fit_connect.ui.notifications.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/exercisesFragment"
+        android:name="com.example.fit_connect.ui.exercises.ExercisesFragment"
+        android:label="Exercises"
+        tools:layout="@layout/fragment_exercises" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.fit_connect.ui.dashboard.calendar.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <action
+        android:id="@+id/action_dashboardFragment_to_calendarFragment"
+        app:destination="@id/calendarFragment" />
+
+
 </navigation>
