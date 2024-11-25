@@ -5,7 +5,7 @@ import androidx.room.Relation
 
 class ExerciseWithSets(
     @Embedded
-    val exerciseWithSets: ExerciseWithSets? = null,
+    val exerciseToSets: ExerciseToSet? = null,
 
     @Relation(
         parentColumn = EXERCISE_ID_NAME,

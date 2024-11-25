@@ -13,8 +13,8 @@ const val EXERCISE_TO_SET_ID_NAME = "exercise_to_sets_id"
     foreignKeys = [
         ForeignKey(
             entity = Exercise::class,
-            parentColumns = [EXERCISE_TABLE_NAME],
-            childColumns = [EXERCISE_TABLE_NAME]
+            parentColumns = [EXERCISE_ID_NAME],
+            childColumns = [EXERCISE_ID_NAME]
         ),
         ForeignKey(
             entity = ExerciseSet::class,
@@ -27,7 +27,7 @@ class ExerciseToSet(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = EXERCISE_TO_SET_ID_NAME)
     val exerciseToSetId: Long? = null,
-    @ColumnInfo(name = EXERCISE_TABLE_NAME)
+    @ColumnInfo(name = EXERCISE_ID_NAME)
     val exerciseId: Long,
     @ColumnInfo(name = SET_ID_NAME)
     val setId: Long

@@ -15,7 +15,12 @@ const val FRIEND_ID_NAME = "friend_id"
         ForeignKey(
             entity = User::class,
             parentColumns = [USER_ID_NAME],
-            childColumns = [USER_ID_NAME, FRIEND_ID_NAME]
+            childColumns = [USER_ID_NAME]
+        ),
+        ForeignKey(
+            entity = User::class,
+            parentColumns = [USER_ID_NAME],
+            childColumns = [FRIEND_ID_NAME]
         )
     ]
 )

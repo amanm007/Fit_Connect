@@ -25,6 +25,6 @@ interface UserDao {
     fun getUserWithSimpleWorkouts(userId: Long): LiveData<UserWithSimpleWorkout>
 
     @Transaction
-    @Query("SELECT * FROM $USER_TABLE_NAME WHERE $USER_TABLE_NAME = :userId")
+    @Query("SELECT * FROM $USER_TABLE_NAME WHERE $USER_ID_NAME = :userId")
     fun getUserWithFollowing(userId: Long): LiveData<UserAndFollowers>
 }
