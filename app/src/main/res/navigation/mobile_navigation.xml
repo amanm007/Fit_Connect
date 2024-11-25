@@ -34,4 +34,14 @@
         android:name="com.example.fit_connect.ui.exercises.ExercisesFragment"
         android:label="Exercises"
         tools:layout="@layout/fragment_exercises" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.example.fit_connect.ui.dashboard.calendar.CalendarFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar" />
+    <action
+        android:id="@+id/action_dashboardFragment_to_calendarFragment"
+        app:destination="@id/calendarFragment" />
+
+
 </navigation>

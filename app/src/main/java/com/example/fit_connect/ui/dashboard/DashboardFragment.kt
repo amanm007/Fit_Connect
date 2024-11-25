@@ -22,6 +22,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var volumeButton: Button
     private lateinit var repsButton: Button
     private lateinit var exercisesButton: Button
+    private lateinit var calendarButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,12 +32,20 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         durationButton = view.findViewById(R.id.durationButton)
         volumeButton = view.findViewById(R.id.volumeButton)
         repsButton = view.findViewById(R.id.repsButton)
-        exercisesButton = view.findViewById(R.id.exercisesButton) // Exercises button
+        exercisesButton = view.findViewById(R.id.exercisesButton)
+        calendarButton=view.findViewById(R.id.calendarButton)
+
 
         // Set click listener for navigating to ExercisesFragment
         exercisesButton.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_exercisesFragment)
         }
+
+        calendarButton.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_calendarFragment)
+        }
+
+
 
         // Set click listeners for buttons to update chart
         durationButton.setOnClickListener {
