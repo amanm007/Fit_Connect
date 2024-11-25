@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.fit_connect.data.user.Following
 import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.user.UserDao
 import com.example.fit_connect.data.workout.Exercise
 import com.example.fit_connect.data.workout.ExerciseSet
+import com.example.fit_connect.data.workout.ExerciseToSet
 import com.example.fit_connect.data.workout.ExerciseType
 import com.example.fit_connect.data.workout.ExerciseTypeConverter
 import com.example.fit_connect.data.workout.Workout
@@ -20,11 +22,13 @@ const val DB_NAME = "fit_connect_db"
 @Database(
     entities = [
         User::class,
+        Following::class,
         Workout::class,
         ExerciseType::class,
         Exercise::class,
         ExerciseSet::class,
-        WorkoutToExercise::class
+        WorkoutToExercise::class,
+        ExerciseToSet::class,
     ],
     version = 1,
     exportSchema = false
