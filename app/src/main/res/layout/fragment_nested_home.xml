@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/weekly_streak_des_txt"
             android:text="@string/weekly_streak_description"
+            android:textColor="#FFFFFF"
             android:paddingLeft="10dp"/>
 
         <!-- Fire Images -->
@@ -58,6 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="5dp"
+                    android:textColor="#FFFFFF"
                     android:layout_gravity="center"/>
 
             </LinearLayout>
@@ -82,10 +84,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
+                    android:textColor="#FFFFFF"
                     android:layout_gravity="center" />
             </LinearLayout>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:id="@+id/toolbar_seperator"
-            android:background="?attr/colorPrimary"
+            android:background="#333333"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:paddingTop="15dp"/>
 
@@ -118,6 +120,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/fit_group_track_txt"
             android:text="@string/fit_group_track"
+            android:textColor="#FFFFFF"
             android:paddingLeft="10dp"/>
 
         <com.anychart.AnyChartView
@@ -132,7 +135,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:id="@+id/toolbar_seperator2"
-            android:background="?attr/colorPrimary"
+            android:background="#333333"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:paddingTop="15dp"/>
 
@@ -150,6 +153,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/pr_recent_txt"
             android:text="@string/recent"
+            android:textColor="#FFFFFF"
             android:paddingLeft="10dp"/>
 
         <ListView
@@ -157,6 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:paddingLeft="20dp"
+            android:divider="@drawable/white_divider"
             android:paddingRight="20dp"
             />
 

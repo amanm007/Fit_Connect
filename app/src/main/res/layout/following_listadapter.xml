@@ -24,6 +24,7 @@
             android:id="@+id/following_name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"/>
 
@@ -46,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/leg_day"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:paddingTop="15dp"
         android:paddingLeft="10dp"
@@ -68,12 +70,14 @@
             <TextView
                 android:text="@string/time"
                 android:layout_width="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/following_time_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:paddingTop="5dp"/>
 
         </LinearLayout>
@@ -86,12 +90,14 @@
             <TextView
                 android:text="@string/volume"
                 android:layout_width="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/following_volume_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
                 android:paddingTop="5dp"/>
 
         </LinearLayout>
@@ -103,12 +109,14 @@
             android:paddingLeft="40dp">
             <TextView
                 android:text="Records"
+                android:textColor="#FFFFFF"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/following_records_txt"
                 android:layout_width="wrap_content"
+                android:textColor="#FFFFFF"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"/>
 
@@ -124,7 +132,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="20dp"
-        android:background="#000000"
+        android:background="@color/white"
         android:layout_margin="8dp"
         />
     <!-- Workout List -->
@@ -133,19 +141,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/workout"
+        android:textColor="#FFFFFF"
         android:textSize="15sp"
+        android:textStyle="bold"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"/>
 
     <ListView
         android:id="@+id/following_workout_listview"
-        android:layout_height="220dp"
+        android:layout_height="240dp"
         android:layout_width="match_parent"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="20dp"
-        android:divider="@android:color/transparent"/>
+        android:divider="@drawable/white_divider"/>
 
     <!--Likes and Comments-->
     <LinearLayout
@@ -158,6 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_0_likes"
+            android:textColor="#FFFFFF"
             android:paddingLeft="30dp"/>
 
         <!--Move Comments to the right end-->
@@ -171,6 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/_0_comments"
+            android:textColor="#FFFFFF"
             android:paddingRight="10dp"/>
 
     </LinearLayout>
@@ -193,7 +205,7 @@
             android:src="@drawable/ic_thumb_up_off"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="#FFFFFF"
+            android:background="#000000"
             android:contentDescription="@string/like"
             />
 
@@ -203,7 +215,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_chat_bubble"
-            android:background="#FFFFFF"
+            android:background="#000000"
             android:contentDescription="COMMENT"/>
 
     </LinearLayout>
@@ -228,6 +240,7 @@
             android:id="@+id/following_comment_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
             android:paddingLeft="10dp"
             />
 
@@ -238,7 +251,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:id="@+id/following_toolbar_seperator"
-        android:background="?attr/colorPrimary"
+        android:background="#333333"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:paddingTop="15dp"/>
 

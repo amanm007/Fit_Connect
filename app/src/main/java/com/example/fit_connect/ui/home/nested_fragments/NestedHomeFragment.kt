@@ -99,15 +99,18 @@ class NestedHomeFragment: Fragment() {
         )
 
         val chartView = root.findViewById<AnyChartView>(R.id.activity_chart_view)
-        val cart : Cartesian = AnyChart.line()
 
+        val cart : Cartesian = AnyChart.line()
+        cart.background().fill("#000000")
         cart.tooltip().positionMode(TooltipPositionMode.POINT)
 
         val line: Line = cart.line(data)
         val line2: Line = cart.line(data2)
+        line.name("You")
+        line2.name("Friend")
 
-        line.stroke("2 #000000")
-        line.stroke("2 #FF0000")
+        line2.stroke("#0000FF")
+        line.stroke("#FF0000")
 
         line.markers().enabled(true)
         line2.markers().enabled(true)
@@ -119,11 +122,18 @@ class NestedHomeFragment: Fragment() {
         cart.legend(true)
         cart.legend().iconSize(10)
         cart.legend().itemsLayout(LegendLayout.HORIZONTAL)
+        cart.legend().fontColor("#FFFFFF")
 
-        cart.xGrid(0).enabled(true)
-        cart.xAxis(0).labels().fontSize(10)
+        cart.xAxis(0).ticks().enabled(true)
+
+        cart.yAxis(0).labels().fontSize(10).fontColor("#FFFFFF")
+        cart.xAxis(0).labels().fontSize(10).fontColor("#FFFFFF")
 
         cart.yAxis(0).title("Hours")
+        cart.yAxis(0).title().fontColor("#FFFFFF")
+
+        cart.xAxis(0).stroke("#FFFFFF")
+        cart.yAxis(0).stroke("#FFFFFF")
 
         chartView.setChart(cart)
     }

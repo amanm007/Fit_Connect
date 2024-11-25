@@ -23,7 +23,7 @@ class WorkoutListAdapter(private val context: Context, private var arrayList:Arr
         val customView: View = View.inflate(context, R.layout.following_workout_listadapter, null)
 
         val workoutImg : ImageView = customView.findViewById(R.id.following_workout_img)
-        workoutImg.setImageResource(R.drawable.defaultpacman)
+        workoutImg.setImageResource(R.drawable.ic_launcher_background)
 
         val workoutDescriptionTxt : TextView = customView.findViewById(R.id.following_workout_description_txt)
         workoutDescriptionTxt.text = "3 sets Pacman workout"

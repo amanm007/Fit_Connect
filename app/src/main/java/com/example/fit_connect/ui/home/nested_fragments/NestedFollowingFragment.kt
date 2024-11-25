@@ -36,7 +36,6 @@ class NestedFollowingFragment : Fragment() {
         //Replace array with actual database array
         val arrayList : ArrayList<Int> = java.util.ArrayList(3)
         arrayList.add(1)
-        arrayList.add(2)
 
         val arrayAdapter = FollowingListAdapter(requireActivity(), arrayList)
         followingListView.adapter = arrayAdapter

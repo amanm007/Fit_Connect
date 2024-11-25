@@ -30,8 +30,9 @@ class NestedPRHistoryFragment: Fragment() {
     }
     private fun setPRHistory(root : View){
         val arrayList : ArrayList<Int> = java.util.ArrayList(3)
-        for(i in 1..10) arrayList.add(i)
-
+        arrayList.add(1)
+        arrayList.add(2)
+        arrayList.add(3)
         val arrayAdapter = PRListAdapter(requireActivity(), arrayList)
         val prListView : ListView = root.findViewById(R.id.pr_history_listview)
         prListView.adapter = arrayAdapter

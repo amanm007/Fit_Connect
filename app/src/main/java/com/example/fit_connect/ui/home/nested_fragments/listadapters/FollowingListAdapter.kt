@@ -29,7 +29,7 @@ class FollowingListAdapter(private val context: Context, private var arrayList:A
 
         //Set Image
         val followProfileImg : ImageView = customView.findViewById(R.id.following_img)
-        followProfileImg.setImageResource(R.drawable.defaultpacman)
+        followProfileImg.setImageResource(R.drawable.ic_launcher_background)
 
         //Set Texts
         val followNameTxt : TextView = customView.findViewById(R.id.following_name_txt)

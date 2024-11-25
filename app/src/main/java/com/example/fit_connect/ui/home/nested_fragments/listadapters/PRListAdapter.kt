@@ -23,7 +23,7 @@ class PRListAdapter (private val context: Context, private var arrayList:ArrayLi
 
         //Set Image
         val imgView : ImageView = customView.findViewById(R.id.exercise_imgview)
-        imgView.setImageResource(R.drawable.defaultpacman)
+        imgView.setImageResource(R.drawable.ic_launcher_background)
 
         //Set Text
         val exercise_routine : TextView = customView.findViewById(R.id.exercise_routine_txt)
