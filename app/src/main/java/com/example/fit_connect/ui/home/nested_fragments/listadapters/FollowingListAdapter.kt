@@ -1,6 +1,8 @@
 package com.example.fit_connect.ui.home.nested_fragments.listadapters
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -9,8 +11,10 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.example.fit_connect.R
+import com.example.fit_connect.ui.home.nested_fragments.CreateCommentActivity
 
 class FollowingListAdapter(private val context: Context, private var arrayList:ArrayList<Int>) : BaseAdapter(){
+    private val ACTIVITY_REQUEST_CODE = 1000000
     override fun getCount(): Int{
         return arrayList.size
     }
@@ -62,7 +66,7 @@ class FollowingListAdapter(private val context: Context, private var arrayList:A
 
         //Setup Img button (For Later)
         val followLikebtn : ImageButton = customView.findViewById(R.id.like_imgbtn)
-        val followComment : ImageButton = customView.findViewById(R.id.comment_imgbtn)
+        val followCommentbtn : ImageButton = customView.findViewById(R.id.comment_imgbtn)
 
         //Last Comment Made
         val followLastCommentImg : ImageView = customView.findViewById(R.id.following_comment_img)
@@ -83,10 +87,20 @@ class FollowingListAdapter(private val context: Context, private var arrayList:A
                 isLiked = true
             }
         }
+        followCommentbtn.setOnClickListener {
+            startCommentActivity()
+        }
 
 
         return customView
         }
+    private fun startCommentActivity(){
+        val intent = Intent(context, CreateCommentActivity::class.java)
 
+        //Put Extra Vals into intent (maybe just the id?)
+        if(context is Activity){
+            context.startActivityForResult(intent, ACTIVITY_REQUEST_CODE)
+        }
 
+    }
 }

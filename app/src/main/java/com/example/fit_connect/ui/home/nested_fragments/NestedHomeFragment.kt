@@ -3,7 +3,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.anychart.AnyChart
 import com.anychart.AnyChartView
@@ -32,7 +35,8 @@ class NestedHomeFragment: Fragment() {
         _binding = FragmentNestedHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        calculateWeeklyStreak()
+
+        calculateWeeklyStreak(root)
         setFitGroupTrack(root)
         setPRHistory(root)
 
@@ -45,24 +49,53 @@ class NestedHomeFragment: Fragment() {
     }
 
 
-    private fun calculateWeeklyStreak(){
+    private fun calculateWeeklyStreak(root: View){
+        val daysStreakTest = 22
 
+        val weekly_fire_layout : LinearLayout = root.findViewById(R.id.weekly_fire_layout)
+        val daily_fire_layout : LinearLayout = root.findViewById(R.id.daily_fire_layout)
+        val weekly_fire_text : TextView = root.findViewById(R.id.weekly_fire_txt)
+        val daily_fire_text : TextView = root.findViewById(R.id.daily_fire_txt)
+
+        val weeks : Int = daysStreakTest / 7
+        val days : Int = daysStreakTest % 7
+
+        for (i in 1..weeks){
+            val fire_imageView = ImageView(getActivity())
+            fire_imageView.setImageResource(R.drawable.ic_fire_streak)
+
+            val layoutParams = LinearLayout.LayoutParams(100,100)
+            fire_imageView.layoutParams = layoutParams
+            weekly_fire_layout.addView(fire_imageView)
+        }
+
+        if(weeks != 0) weekly_fire_text.text = weeks.toString() + " weeks"
+
+        for (i in 1 .. days){
+            val fire_imageView = ImageView(getActivity())
+            fire_imageView.setImageResource(R.drawable.ic_fire_streak)
+
+            val layoutParams = LinearLayout.LayoutParams(75,75)
+            fire_imageView.layoutParams = layoutParams
+            daily_fire_layout.addView(fire_imageView)
+        }
+       if(days != 0) daily_fire_text.text = days.toString() + " days"
     }
 
     private fun setFitGroupTrack(root : View){
         val data = listOf(
-            ValueDataEntry(0,2),
-            ValueDataEntry(1,4),
-            ValueDataEntry(2,2),
-            ValueDataEntry(3,5),
-            ValueDataEntry(4,3.5)
+            ValueDataEntry("Monday",2),
+            ValueDataEntry("Tuesday",4),
+            ValueDataEntry("Wednesday",2),
+            ValueDataEntry("Thursday",5),
+            ValueDataEntry("Friday",3.5)
         )
         val data2 = listOf(
-            ValueDataEntry(0,1),
-            ValueDataEntry(1,2),
-            ValueDataEntry(2,3),
-            ValueDataEntry(3,5),
-            ValueDataEntry(4,4)
+            ValueDataEntry("Monday",1),
+            ValueDataEntry("Tuesday",2),
+            ValueDataEntry("Wednesday",3),
+            ValueDataEntry("Thursday",5),
+            ValueDataEntry("Friday",4)
         )
 
         val chartView = root.findViewById<AnyChartView>(R.id.activity_chart_view)

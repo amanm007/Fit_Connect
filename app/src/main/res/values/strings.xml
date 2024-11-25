@@ -21,6 +21,8 @@
     <string name="_0_likes">0 likes</string>
     <string name="_0_comments">0 comments</string>
     <string name="like">LIKE</string>
+    <string name="add_a_comment">Add a comment .......</string>
+    <string name="post">Post</string>
     <string-array name="home_dropdown_options">
         <item>HOME</item>
         <item>FOLLOWING</item>
