@@ -181,37 +181,49 @@
         android:padding="8dp">
 
         <Button
-            android:layout_width="0dp"
+            android:id="@+id/statisticsButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
             android:text="Statistics"
-            android:background="@drawable/rounded_button_background"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/blue"
             android:textColor="@color/white" />
 
         <Button
-            android:layout_width="0dp"
+            android:id="@+id/exercisesButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:background="@drawable/rounded_button_background"
-            android:backgroundTint="#121212"
             android:text="Exercises"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white" />
+
+
+        <Button
+            android:id="@+id/measuresButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Measures"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/blue"
             android:textColor="@color/white" />
 
         <Button
-            android:layout_width="0dp"
+            android:id="@+id/calendarButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:text="Measures"
-            android:background="@drawable/rounded_button_background"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
             android:text="Calendar"
-            android:background="@drawable/rounded_button_background"
-            android:textColor="@color/white"/>
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white" />
     </GridLayout>
 
     <!-- Workouts Section -->

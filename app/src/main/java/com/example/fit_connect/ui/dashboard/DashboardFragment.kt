@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.fit_connect.R
 import com.example.fit_connect.WorkoutRecord
 import com.github.mikephil.charting.charts.BarChart
@@ -20,6 +21,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var durationButton: Button
     private lateinit var volumeButton: Button
     private lateinit var repsButton: Button
+    private lateinit var exercisesButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,8 +31,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         durationButton = view.findViewById(R.id.durationButton)
         volumeButton = view.findViewById(R.id.volumeButton)
         repsButton = view.findViewById(R.id.repsButton)
+        exercisesButton = view.findViewById(R.id.exercisesButton) // Exercises button
 
-        // Set click listeners for buttons
+        // Set click listener for navigating to ExercisesFragment
+        exercisesButton.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_exercisesFragment)
+        }
+
+        // Set click listeners for buttons to update chart
         durationButton.setOnClickListener {
             updateChart(viewModel.weeklyRecords.value ?: listOf(), "duration")
             toggleButtonColors(durationButton)
@@ -48,7 +56,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         // Observe weekly records from ViewModel
         viewModel.weeklyRecords.observe(viewLifecycleOwner) { records ->
-            updateChart(records, "duration")
+            updateChart(records, "duration") // Default chart to "duration"
         }
     }
 
