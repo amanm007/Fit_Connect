@@ -55,6 +55,9 @@
         <argument
             android:name="exerciseName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_logExerciseFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
     </fragment>
 
     <fragment
@@ -72,5 +75,13 @@
             android:id="@+id/action_emptyWorkoutFragment_to_exercisesFragment"
             app:destination="@id/exercisesFragment" />
     </fragment>
+
+    <action
+        android:id="@+id/action_global_exercisesFragment"
+        app:destination="@id/exercisesFragment" />
+
+    <action
+        android:id="@+id/action_global_home"
+        app:destination="@id/navigation_home" />
 
 </navigation>
