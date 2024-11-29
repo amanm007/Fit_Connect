@@ -20,7 +20,6 @@ class ExercisesFragment : Fragment(R.layout.fragment_exercises) {
 
         _binding = FragmentExercisesBinding.bind(view)
 
-
         binding.toolbar.setNavigationOnClickListener {
             if (!findNavController().navigateUp()) {
                 requireActivity().onBackPressed()
@@ -39,17 +38,13 @@ class ExercisesFragment : Fragment(R.layout.fragment_exercises) {
         )
 
         adapter = ExercisesAdapter(exercisesList) { exercise ->
-            // Create a Bundle to pass the data
-            val bundle = Bundle().apply {
-                putString("exerciseName", exercise.name)
-                putString("exerciseCategory", exercise.category)
-            }
-
-            // Navigate to EmptyWorkoutFragment and pass the bundle
-            findNavController().navigate(R.id.action_exercisesFragment_to_emptyWorkoutFragment, bundle)
+            // Navigate using the SafeArgs
+            val action = ExercisesFragmentDirections
+                .actionExercisesFragmentToLogExerciseFragment(
+                    exerciseName = exercise.name
+                )
+            findNavController().navigate(action)
         }
-
-
 
         binding.exercisesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.exercisesRecyclerView.adapter = adapter

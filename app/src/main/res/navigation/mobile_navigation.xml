@@ -38,7 +38,24 @@
         android:id="@+id/exercisesFragment"
         android:name="com.example.fit_connect.ui.exercises.ExercisesFragment"
         android:label="Exercises"
-        tools:layout="@layout/fragment_exercises" />
+        tools:layout="@layout/fragment_exercises">
+        <action
+            android:id="@+id/action_exercisesFragment_to_logExerciseFragment"
+            app:destination="@id/logExerciseFragment" />
+        <action
+            android:id="@+id/action_exercisesFragment_to_emptyWorkoutFragment"
+            app:destination="@id/emptyWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/logExerciseFragment"
+        android:name="com.example.fit_connect.ui.exercises.LogExerciseFragment"
+        android:label="Log Exercise"
+        tools:layout="@layout/fragment_log_exercise">
+        <argument
+            android:name="exerciseName"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/calendarFragment"
@@ -55,10 +72,5 @@
             android:id="@+id/action_emptyWorkoutFragment_to_exercisesFragment"
             app:destination="@id/exercisesFragment" />
     </fragment>
-
-    <action
-        android:id="@+id/action_exercisesFragment_to_emptyWorkoutFragment"
-        app:destination="@id/emptyWorkoutFragment" />
-
 
 </navigation>
