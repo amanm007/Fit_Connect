@@ -17,6 +17,8 @@ const val EXERCISE_TYPE_ID_NAME = "exercise_type_id"
 
 @Entity(tableName = EXERCISE_TYPE_TABLE_NAME)
 data class ExerciseType(
+    val type: ExerciseTypeEnum,
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = EXERCISE_TYPE_ID_NAME)
     val exerciseTypeId: Long? = null
@@ -24,12 +26,8 @@ data class ExerciseType(
 
 class ExerciseTypeConverter {
     @TypeConverter
-    fun fromExerciseType(exerciseType: ExerciseType): Long? {
-        return exerciseType.exerciseTypeId
-    }
+    fun toExerciseType(exerciseTypeName: String): ExerciseTypeEnum = enumValueOf(exerciseTypeName)
 
     @TypeConverter
-    fun toExerciseType(id: Int): ExerciseTypeEnum? {
-        return ExerciseTypeEnum.entries.find { it.id == id }
-    }
+    fun fromExerciseType(type: ExerciseTypeEnum): String = type.name
 }

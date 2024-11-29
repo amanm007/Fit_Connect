@@ -50,6 +50,7 @@ abstract class FitConnectDatabase : RoomDatabase() {
                         FitConnectDatabase::class.java,
                         DB_NAME
                     )
+                    .addCallback(SeedDb().seed(context))
                     .build()
                 INSTANCE = instance
                 return instance
