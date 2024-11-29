@@ -11,7 +11,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.example.fit_connect.R
-import com.example.fit_connect.ui.home.nested_fragments.CreateCommentActivity
+import com.example.fit_connect.ui.home.nested_fragments.following_activities.CreateCommentActivity
 
 class FollowingListAdapter(private val context: Context, private var arrayList:ArrayList<Int>) : BaseAdapter(){
     private val ACTIVITY_REQUEST_CODE = 1000000

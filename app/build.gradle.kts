@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -61,6 +62,8 @@ dependencies {
 
     // Material CalendarView
     implementation("com.prolificinteractive:material-calendarview:1.4.3")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
+    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
 
     // Room Database
     val room_version = "2.6.1"
