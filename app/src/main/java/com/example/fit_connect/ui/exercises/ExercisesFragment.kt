@@ -38,7 +38,18 @@ class ExercisesFragment : Fragment(R.layout.fragment_exercises) {
             Exercise("Seated Row (Machine)", "Back")
         )
 
-        val adapter = ExercisesAdapter(exercisesList)
+        adapter = ExercisesAdapter(exercisesList) { exercise ->
+            // Create a Bundle to pass the data
+            val bundle = Bundle().apply {
+                putString("exerciseName", exercise.name)
+                putString("exerciseCategory", exercise.category)
+            }
+
+            // Navigate to EmptyWorkoutFragment and pass the bundle
+            findNavController().navigate(R.id.action_exercisesFragment_to_emptyWorkoutFragment, bundle)
+        }
+
+
 
         binding.exercisesRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.exercisesRecyclerView.adapter = adapter

@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fit_connect.R
 
 data class Exercise(val name: String, val category: String)
-
-class ExercisesAdapter(private val exercises: List<Exercise>) :
-    RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder>() {
+class ExercisesAdapter(
+    private val exercises: List<Exercise>,
+    private val onItemClicked: (Exercise) -> Unit
+) : RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder>() {
 
     class ExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val exerciseImage: ImageView = view.findViewById(R.id.exercise_image)
@@ -29,7 +30,13 @@ class ExercisesAdapter(private val exercises: List<Exercise>) :
         holder.exerciseName.text = exercise.name
         holder.exerciseCategory.text = exercise.category
         holder.exerciseImage.setImageResource(R.drawable.ic_launcher_background) // Replace with actual image
+
+        // Set click listener
+        holder.itemView.setOnClickListener {
+            onItemClicked(exercise)
+        }
     }
 
     override fun getItemCount() = exercises.size
 }
+

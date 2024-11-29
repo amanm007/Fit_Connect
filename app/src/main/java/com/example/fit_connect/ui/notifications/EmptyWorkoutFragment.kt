@@ -12,6 +12,10 @@ class EmptyWorkoutFragment : Fragment(R.layout.empty_workout_page) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Retrieve the data from the Bundle
+        val exerciseName = arguments?.getString("exerciseName")
+        val exerciseCategory = arguments?.getString("exerciseCategory")
+
         // Setup click listeners
         view.findViewById<View>(R.id.backButton).setOnClickListener {
             findNavController().navigateUp()
