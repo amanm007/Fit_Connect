@@ -5,6 +5,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.example.fit_connect.data.FitConnectDatabase
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
@@ -13,11 +14,10 @@ import java.util.concurrent.TimeoutException
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
 class TestUtil {
     companion object {
-        fun createTestDatabase(context: Context): FitConnectDatabase {
+        fun createTestDbBuilder(context: Context): RoomDatabase.Builder<FitConnectDatabase> {
             return Room
                 .inMemoryDatabaseBuilder(context, FitConnectDatabase::class.java)
                 .allowMainThreadQueries()
-                .build()
         }
     }
 }

@@ -9,8 +9,10 @@ import com.example.fit_connect.data.user.UserDao
 import kotlinx.coroutines.runBlocking
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.fit_connect.TestUtil
-import com.example.fit_connect.data.SeedData.Companion.makeTestUser
-import com.example.fit_connect.data.SeedData.Companion.makeTestWorkout
+import com.example.fit_connect.data.SeedTestData.Companion.makeTestUser
+import com.example.fit_connect.data.SeedTestData.Companion.makeTestWorkout
+import com.example.fit_connect.data.user.User
+import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutDao
 import org.junit.After
 import org.junit.Before
@@ -30,7 +32,7 @@ class UserDaoTests {
     @Before
     fun before() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        db = TestUtil.createTestDatabase(context)
+        db = TestUtil.createTestDbBuilder(context).build()
         userDao = db.userDao()
         workoutDao = db.workoutDao()
     }
@@ -48,10 +50,7 @@ class UserDaoTests {
 
     @Test
     fun testGetAllUsers() = runBlocking {
-        val expectedUsers = SeedData.testUsers.map {
-            val uid = userDao.insertUser(it)
-            makeTestUser(uid)
-        }.sortedBy { it.userId }
+        val expectedUsers = insertTestUsers(userDao, SeedTestData.testUsers).sortedBy { it.userId }
 
         val users = userDao.getAllUsers().awaitValue().sortedBy { it.userId }
         assert(users == expectedUsers)
@@ -59,10 +58,7 @@ class UserDaoTests {
 
     @Test
     fun testGetUserById() = runBlocking {
-        val expectedUser = SeedData.testUsers.map {
-            val uid = userDao.insertUser(it)
-            makeTestUser(uid)
-        }.first()
+        val expectedUser = insertTestUsers(userDao, SeedTestData.testUsers).first()
 
         val user = userDao.getUser(expectedUser.userId!!).awaitValue()
         assert(user != null)
@@ -71,8 +67,7 @@ class UserDaoTests {
 
     @Test
     fun testInsertUser() = runBlocking {
-        val expectedUser = SeedData.testUsers.first()
-        userDao.insertUser(expectedUser)
+        val expectedUser = insertTestUser(userDao, SeedTestData.testUsers.first())
 
         val users = userDao.getAllUsers().awaitValue()
         assert(users.size == 1)
@@ -81,9 +76,9 @@ class UserDaoTests {
 
     @Test
     fun getUserWithNoSimpleWorkouts() = runBlocking {
-        val insertUser = SeedData.testUsers.first()
+        val insertUser = SeedTestData.testUsers.first()
         val userId = userDao.insertUser(insertUser)
-        val expectedUserWithSimpleWorkouts = SeedData.makeTestUserWithSimpleWorkouts(
+        val expectedUserWithSimpleWorkouts = SeedTestData.makeTestUserWithSimpleWorkouts(
             makeTestUser(userId),
             listOf()
         )
@@ -95,14 +90,8 @@ class UserDaoTests {
 
     @Test
     fun getUserWithSimpleWorkouts() = runBlocking {
-        val expectedUser = SeedData.testUsers.map {
-            val uid = userDao.insertUser(it)
-            makeTestUser(uid)
-        }.first()
-        val expectedWorkouts = SeedData.testWorkouts.map {
-            val wid = workoutDao.insertWorkout(it)
-            makeTestWorkout(wid)
-        }.sortedBy { it.workoutId }
+        val expectedUser = insertTestUsers(userDao, SeedTestData.testUsers).first()
+        val expectedWorkouts = insertTestWorkouts(workoutDao, SeedTestData.testWorkouts).sortedBy { it.workoutId }
 
         val userWithSimpleWorkouts = userDao.getUserWithSimpleWorkouts(expectedUser.userId!!).awaitValue()
         val workouts = userWithSimpleWorkouts.workouts.sortedBy { it.workoutId }
@@ -110,7 +99,15 @@ class UserDaoTests {
         assert(workouts == expectedWorkouts)
     }
 
-//    private suspend fun insertTestUsers(userDao: UserDao, users: List<User>) = runBlocking {
-//        users.map { makeTestUser(userDao.insertUser(it)) }
-//    }
+    private suspend fun insertTestUsers(userDao: UserDao, users: List<User>)
+        = users.map { insertTestUser(userDao, it) }
+
+    private suspend fun insertTestUser(userDao: UserDao, user: User)
+        = makeTestUser(userDao.insertUser(user))
+
+    private suspend fun insertTestWorkouts(workoutDao: WorkoutDao, workouts: List<Workout>)
+        = workouts.map { insertTestWorkout(workoutDao, it) }
+
+    private suspend fun insertTestWorkout(workoutDao: WorkoutDao, workout: Workout)
+        = makeTestWorkout(workout.workoutId!!, workoutDao.insertWorkout(workout))
 }
