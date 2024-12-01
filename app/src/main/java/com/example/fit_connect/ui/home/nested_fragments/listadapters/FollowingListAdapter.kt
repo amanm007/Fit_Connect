@@ -11,14 +11,15 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.example.fit_connect.R
+import com.example.fit_connect.data.user.Following
 import com.example.fit_connect.ui.home.nested_fragments.following_activities.CreateCommentActivity
 
-class FollowingListAdapter(private val context: Context, private var arrayList:ArrayList<Int>) : BaseAdapter(){
+class FollowingListAdapter(private val context: Context, private var arrayList:List<Following>) : BaseAdapter(){
     private val ACTIVITY_REQUEST_CODE = 1000000
     override fun getCount(): Int{
         return arrayList.size
     }
-    override fun getItem(position: Int): Int{
+    override fun getItem(position: Int): Following{
         return arrayList[position]
     }
     override fun getItemId(position: Int) : Long{
@@ -29,6 +30,7 @@ class FollowingListAdapter(private val context: Context, private var arrayList:A
 
         //Set Image
         val followProfileImg : ImageView = customView.findViewById(R.id.following_img)
+
         followProfileImg.setImageResource(R.drawable.ic_launcher_background)
 
         //Set Texts
@@ -102,5 +104,8 @@ class FollowingListAdapter(private val context: Context, private var arrayList:A
             context.startActivityForResult(intent, ACTIVITY_REQUEST_CODE)
         }
 
+    }
+    fun replace(newFollowing : List<Following>){
+        arrayList = newFollowing
     }
 }
