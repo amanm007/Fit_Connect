@@ -16,32 +16,72 @@
         android:name="com.example.fit_connect.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard">
-
-        <!-- Action to navigate to ExercisesFragment -->
         <action
             android:id="@+id/action_dashboardFragment_to_exercisesFragment"
             app:destination="@id/exercisesFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_calendarFragment"
+            app:destination="@id/calendarFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.fit_connect.ui.notifications.ProfileFragment"
+        android:name="com.example.fit_connect.ui.notifications.WorkoutFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_navigation_profile_to_emptyWorkoutFragment"
+            app:destination="@id/emptyWorkoutFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/exercisesFragment"
         android:name="com.example.fit_connect.ui.exercises.ExercisesFragment"
         android:label="Exercises"
-        tools:layout="@layout/fragment_exercises" />
+        tools:layout="@layout/fragment_exercises">
+        <action
+            android:id="@+id/action_exercisesFragment_to_logExerciseFragment"
+            app:destination="@id/logExerciseFragment" />
+        <action
+            android:id="@+id/action_exercisesFragment_to_emptyWorkoutFragment"
+            app:destination="@id/emptyWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/logExerciseFragment"
+        android:name="com.example.fit_connect.ui.exercises.LogExerciseFragment"
+        android:label="Log Exercise"
+        tools:layout="@layout/fragment_log_exercise">
+        <argument
+            android:name="exerciseName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_logExerciseFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/calendarFragment"
         android:name="com.example.fit_connect.ui.dashboard.calendar.CalendarFragment"
         android:label="Calendar"
         tools:layout="@layout/fragment_calendar" />
-    <action
-        android:id="@+id/action_dashboardFragment_to_calendarFragment"
-        app:destination="@id/calendarFragment" />
 
+    <fragment
+        android:id="@+id/emptyWorkoutFragment"
+        android:name="com.example.fit_connect.ui.workout.EmptyWorkoutFragment"
+        android:label="EmptyWorkoutFragment"
+        tools:layout="@layout/empty_workout_page">
+        <action
+            android:id="@+id/action_emptyWorkoutFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_exercisesFragment"
+        app:destination="@id/exercisesFragment" />
+
+    <action
+        android:id="@+id/action_global_home"
+        app:destination="@id/navigation_home" />
 
 </navigation>

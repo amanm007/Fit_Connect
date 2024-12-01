@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fit_Connect</string>
+    <string name="set_number">%d</string>
+    <string name="weight_reps_format">%.1flbs × %d</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -50,4 +52,5 @@
     <string name="follow">Follow</string>
     <string name="find_followers">Find Followers</string>
     <string name="unfollow">Unfollow</string>
+    <string name="Workout">Workout</string>
 </resources>
