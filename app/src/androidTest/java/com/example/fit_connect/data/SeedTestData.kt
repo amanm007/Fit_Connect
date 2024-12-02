@@ -50,8 +50,8 @@ class SeedTestData {
         fun makeTestExerciseType(type: ExerciseTypeEnum, id: Long? = null)
             = ExerciseType(type, id)
         val testExerciseTypes = listOf(
-            makeTestExerciseType(ExerciseTypeEnum.PullUp, 1),
-            makeTestExerciseType(ExerciseTypeEnum.HammerCurl, 2)
+            makeTestExerciseType(ExerciseTypeEnum.PullUps, 1),
+            makeTestExerciseType(ExerciseTypeEnum.Squat, 2)
         )
 
         suspend fun insertTestExercises(workoutDao: WorkoutDao, workoutId: Long, exerciseTypeId: Long, exercises: List<Exercise>)
