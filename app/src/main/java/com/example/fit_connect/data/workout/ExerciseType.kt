@@ -5,11 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 
-enum class ExerciseTypeEnum(val id: Int) {
-    PullUp(0),
-    StandingCalfRaises(1),
-    LegExtensions(2),
-    HammerCurl(3)
+enum class ExerciseTypeEnum(val id: Int, val displayName: String, val category: String) {
+    BenchPress(0, "Bench Press", "Chest"),
+    Squat(0, "Squat", "Legs"),
+    DeadLift(0, "Dead Lift", "Back"),
+    OverheadPress(0, "Overhead Press", "Shoulders"),
+    PullUps(0, "Pull Ups", "Back"),
+    PushUps(0, "Push Ups", "Chest"),
+    BarbellRow(0, "Barbell Row", "Back"),
+    DumbbellCurl(0, "Dumbbell Curl", "Arms")
 }
 
 const val EXERCISE_TYPE_TABLE_NAME = "exerciseType"
@@ -17,6 +21,8 @@ const val EXERCISE_TYPE_ID_NAME = "exercise_type_id"
 
 @Entity(tableName = EXERCISE_TYPE_TABLE_NAME)
 data class ExerciseType(
+    val type: ExerciseTypeEnum,
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = EXERCISE_TYPE_ID_NAME)
     val exerciseTypeId: Long? = null
@@ -24,12 +30,8 @@ data class ExerciseType(
 
 class ExerciseTypeConverter {
     @TypeConverter
-    fun fromExerciseType(exerciseType: ExerciseType): Long? {
-        return exerciseType.exerciseTypeId
-    }
+    fun toExerciseType(exerciseTypeName: String): ExerciseTypeEnum = enumValueOf(exerciseTypeName)
 
     @TypeConverter
-    fun toExerciseType(id: Int): ExerciseTypeEnum? {
-        return ExerciseTypeEnum.entries.find { it.id == id }
-    }
+    fun fromExerciseType(type: ExerciseTypeEnum): String = type.name
 }

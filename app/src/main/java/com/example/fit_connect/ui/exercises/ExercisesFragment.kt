@@ -9,14 +9,20 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fit_connect.R
+import com.example.fit_connect.data.FitConnectDatabase
+import com.example.fit_connect.data.workout.ExerciseType
+import com.example.fit_connect.data.workout.WorkoutRepository
 import com.example.fit_connect.databinding.FragmentExercisesBinding
 import com.google.android.material.textfield.TextInputEditText
 
 class ExercisesFragment : Fragment() {
     private var _binding: FragmentExercisesBinding? = null
     private val binding get() = _binding!!
-    private val allExercises = getSampleExercises()
-    private var filteredExercises = allExercises
+
+    private lateinit var db: FitConnectDatabase
+    private lateinit var workoutRepo: WorkoutRepository
+    private lateinit var allExercises: List<ExerciseType>
+    private lateinit var filteredExercises: List<ExerciseType>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,14 +30,23 @@ class ExercisesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentExercisesBinding.inflate(inflater, container, false)
+
+        db = FitConnectDatabase.getInstance(requireContext())
+        workoutRepo = WorkoutRepository(db.workoutDao())
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupToolbar()
-        setupRecyclerView()
         setupSearchButton()
+
+        workoutRepo.getAllExerciseTypes().observe(viewLifecycleOwner) {
+            allExercises = it
+            filteredExercises = allExercises
+            setupRecyclerView()
+        }
     }
 
     private fun setupToolbar() {
@@ -45,7 +60,7 @@ class ExercisesFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ExercisesAdapter(filteredExercises) { exercise ->
                 findNavController().navigate(
-                    ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(exercise.name)
+                    ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(exercise.type.displayName)
                 )
             }
         }
@@ -78,8 +93,8 @@ class ExercisesFragment : Fragment() {
             allExercises
         } else {
             allExercises.filter { exercise ->
-                exercise.name.contains(query, ignoreCase = true) ||
-                        exercise.category.contains(query, ignoreCase = true)
+                exercise.type.displayName.contains(query, ignoreCase = true) ||
+                        exercise.type.category.contains(query, ignoreCase = true)
             }
         }
         updateRecyclerView()
@@ -88,22 +103,9 @@ class ExercisesFragment : Fragment() {
     private fun updateRecyclerView() {
         binding.exercisesRecyclerView.adapter = ExercisesAdapter(filteredExercises) { exercise ->
             findNavController().navigate(
-                ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(exercise.name)
+                ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(exercise.type.displayName)
             )
         }
-    }
-
-    private fun getSampleExercises(): List<Exercise> {
-        return listOf(
-            Exercise("Bench Press", "Chest"),
-            Exercise("Squat", "Legs"),
-            Exercise("Deadlift", "Back"),
-            Exercise("Overhead Press", "Shoulders"),
-            Exercise("Pull-ups", "Back"),
-            Exercise("Push-ups", "Chest"),
-            Exercise("Barbell Row", "Back"),
-            Exercise("Dumbbell Curl", "Arms")
-        )
     }
 
     override fun onDestroyView() {
