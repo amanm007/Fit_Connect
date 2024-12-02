@@ -5,17 +5,17 @@ import androidx.room.Relation
 
 class ExerciseWithSets(
     @Embedded
-    val exerciseToSets: ExerciseToSet? = null,
+    val exercise: Exercise,
 
     @Relation(
         parentColumn = EXERCISE_ID_NAME,
         entityColumn = EXERCISE_ID_NAME
     )
-    val exercise: Exercise,
+    val sets: List<ExerciseSet>,
 
     @Relation(
-        parentColumn = SET_ID_NAME,
-        entityColumn = SET_ID_NAME
+        parentColumn = EXERCISE_TYPE_ID_NAME,
+        entityColumn = EXERCISE_TYPE_ID_NAME
     )
-    val sets: List<ExerciseSet>
+    val exerciseType: ExerciseType
 )
