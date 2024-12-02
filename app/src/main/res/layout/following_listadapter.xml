@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="15dp">
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
         <ImageView
             android:id="@+id/following_img"
             android:layout_width="50dp"
@@ -42,209 +43,223 @@
             android:paddingRight="15dp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/workout_day_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/leg_day"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:paddingTop="15dp"
-        android:paddingLeft="10dp"
-        />
 
-    <!-- Layout for Time Volume Records -->
-
+    <!-- Layout For all Workout Data -->
     <LinearLayout
+        android:id="@+id/following_workout_data_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:text="@string/time"
-                android:layout_width="wrap_content"
-                android:textColor="#FFFFFF"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/following_time_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:paddingTop="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="40dp">
-            <TextView
-                android:text="@string/volume"
-                android:layout_width="wrap_content"
-                android:textColor="#FFFFFF"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/following_volume_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#FFFFFF"
-                android:paddingTop="5dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="40dp">
-            <TextView
-                android:text="Records"
-                android:textColor="#FFFFFF"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/following_records_txt"
-                android:layout_width="wrap_content"
-                android:textColor="#FFFFFF"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <!-- Line Spacing -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="20dp"
-        android:background="@color/white"
-        android:layout_margin="8dp"
-        />
-    <!-- Workout List -->
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/workout"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"/>
-
-    <ListView
-        android:id="@+id/following_workout_listview"
-        android:layout_height="240dp"
-        android:layout_width="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp"
-        android:paddingRight="20dp"
-        android:divider="@drawable/white_divider"/>
-
-    <!--Likes and Comments-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/number_likes_txt"
+            android:id="@+id/workout_day_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/_0_likes"
+            android:text="@string/leg_day"
             android:textColor="#FFFFFF"
-            android:paddingLeft="30dp"/>
-
-        <!--Move Comments to the right end-->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <TextView
-            android:id="@+id/number_comments_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/_0_comments"
-            android:textColor="#FFFFFF"
-            android:paddingRight="10dp"/>
-
-    </LinearLayout>
-
-    <!-- Like and Comment Img-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/like_imgbtn"
-            android:src="@drawable/ic_thumb_up_off"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#000000"
-            android:contentDescription="@string/like"
-            />
-
-
-        <ImageButton
-            android:id="@+id/comment_imgbtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_chat_bubble"
-            android:background="#000000"
-            android:contentDescription="COMMENT"/>
-
-    </LinearLayout>
-
-
-    <!-- Last Comment -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingBottom="20dp">
-
-        <ImageView
-            android:id="@+id/following_comment_img"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            />
-
-        <TextView
-            android:id="@+id/following_comment_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:paddingTop="15dp"
             android:paddingLeft="10dp"
             />
 
+
+        <!-- Layout for Time Volume Records -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp">
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="@string/time"
+                    android:layout_width="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/following_time_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:paddingTop="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="40dp">
+                <TextView
+                    android:text="@string/volume"
+                    android:layout_width="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/following_volume_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:paddingTop="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="40dp">
+                <TextView
+                    android:text="Records"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/following_records_txt"
+                    android:layout_width="wrap_content"
+                    android:textColor="#FFFFFF"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <!-- Line Spacing -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="20dp"
+            android:background="@color/white"
+            android:layout_margin="8dp"
+            />
+        <!-- Workout List -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/workout"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"/>
+
+        <ListView
+            android:id="@+id/following_workout_listview"
+            android:layout_height="240dp"
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:divider="@drawable/white_divider"/>
+
+        <!--Likes and Comments-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/number_likes_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_0_likes"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="30dp"/>
+
+            <!--Move Comments to the right end-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:id="@+id/number_comments_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/_0_comments"
+                android:textColor="#FFFFFF"
+                android:paddingRight="10dp"/>
+
+        </LinearLayout>
+
+        <!-- Like and Comment Img-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/like_imgbtn"
+                android:src="@drawable/ic_thumb_up_off"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="#000000"
+                android:contentDescription="@string/like"
+                />
+
+
+            <ImageButton
+                android:id="@+id/comment_imgbtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_chat_bubble"
+                android:background="#000000"
+                android:contentDescription="COMMENT"/>
+
+        </LinearLayout>
+
+
+        <!-- Last Comment -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/following_comment_img"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                />
+
+            <TextView
+                android:id="@+id/following_comment_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="10dp"
+                />
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <!-- Seperator -->
     <androidx.appcompat.widget.Toolbar

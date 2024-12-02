@@ -14,6 +14,7 @@ import com.example.fit_connect.data.workout.ExerciseToSet
 import com.example.fit_connect.data.workout.ExerciseType
 import com.example.fit_connect.data.workout.ExerciseTypeConverter
 import com.example.fit_connect.data.workout.Workout
+import com.example.fit_connect.data.workout.WorkoutConverter
 import com.example.fit_connect.data.workout.WorkoutDao
 import com.example.fit_connect.data.workout.WorkoutToExercise
 
@@ -33,7 +34,7 @@ const val DB_NAME = "fit_connect_db"
     version = 1,
     exportSchema = false
 )
-@TypeConverters(ExerciseTypeConverter::class)
+@TypeConverters(ExerciseTypeConverter::class, WorkoutConverter::class)
 abstract class FitConnectDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun workoutDao(): WorkoutDao

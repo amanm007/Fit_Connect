@@ -25,9 +25,9 @@
             android:paddingLeft="10dp"/>
 
         <TextView
+            android:id="@+id/weekly_streak_des_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/weekly_streak_des_txt"
             android:text="@string/weekly_streak_description"
             android:textColor="#FFFFFF"
             android:paddingLeft="10dp"/>
@@ -105,16 +105,54 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:paddingTop="15dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/your_activity_txt"
-            android:text="@string/your_activity"
-            android:paddingTop="10dp"
-            android:paddingLeft="10dp"
-            android:textColor="#00CED1"
-            />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/your_activity_txt"
+                android:text="@string/your_activity"
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:textColor="#00CED1"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:text="You"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0000FF"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"
+                />
+            <TextView
+                android:id="@+id/friend1_legend_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#FF0000"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"/>
+
+            <TextView
+                android:id="@+id/friend2_legend_txt"
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#00FF00"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"/>
+
+
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,13 +161,11 @@
             android:textColor="#FFFFFF"
             android:paddingLeft="10dp"/>
 
-        <com.anychart.AnyChartView
+        <lecho.lib.hellocharts.view.LineChartView
             android:id="@+id/activity_chart_view"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:paddingRight="20dp"/>
+            android:layout_gravity="center" />
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"

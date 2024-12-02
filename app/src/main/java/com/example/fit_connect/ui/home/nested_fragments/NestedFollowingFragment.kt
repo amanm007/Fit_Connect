@@ -28,7 +28,7 @@ class NestedFollowingFragment : Fragment() {
 
     //List
     private lateinit var followingList : List<Following>
-    private lateinit var followingArrayAdapter : FollowingListAdapter
+    lateinit var followingArrayAdapter : FollowingListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -56,7 +56,7 @@ class NestedFollowingFragment : Fragment() {
         val getFollowersLiveData = repository.getUserWithFollowing(userId)
 
         followingList = listOf()
-        followingArrayAdapter = FollowingListAdapter(requireActivity(),followingList)
+        followingArrayAdapter = FollowingListAdapter(requireActivity(),followingList, userId)
         followingListView.adapter = followingArrayAdapter
 
         getFollowersLiveData.observe(requireActivity(),{ Followers->

@@ -39,6 +39,7 @@ class FindFollowerActivity : AppCompatActivity() {
 
     private var userId : Long = 0
     private var friendId : Long = -1
+    private var friendName : String = ""
     private var followingId : Long = -1
     private var following : Following? = null
     private var username_search : String = ""
@@ -119,6 +120,7 @@ class FindFollowerActivity : AppCompatActivity() {
                         followingNameText.text = "Name: " + user.firstName + " " + user.lastName
 
                         friendId = user.userId!!
+                        friendName = user.firstName
                         //Check if the user is already following
                         checkIfFollowing()
 
@@ -158,9 +160,9 @@ class FindFollowerActivity : AppCompatActivity() {
 
                 //Add Follower to list
                 CoroutineScope(IO).launch{
-                    val insertfollowing = Following(userId = userId, friendId = friendId)
+                    val insertfollowing = Following(userId = userId, friendId = friendId, friendName = friendName)
                     followingId = repository.insertFollowing(insertfollowing)
-                    following = Following(followingId = followingId, userId = userId, friendId = friendId)
+                    following = Following(followingId = followingId, userId = userId, friendId = friendId, friendName = friendName)
                     println("ADDED")
                 }
                 followbtn.text = getString(R.string.unfollow)
