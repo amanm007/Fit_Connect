@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#333333"
+        android:paddingRight="20dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
 
         <!-- Spinner in the Toolbar -->
@@ -23,6 +24,15 @@
             android:layout_gravity="left"
             android:spinnerMode="dropdown"
             android:entries="@array/home_dropdown_options" />
+
+        <ImageButton
+            android:id="@+id/find_followers_home_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_search"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
+
     </androidx.appcompat.widget.Toolbar>
     <fragment
         android:id="@+id/nav_host_fragment_content_home"

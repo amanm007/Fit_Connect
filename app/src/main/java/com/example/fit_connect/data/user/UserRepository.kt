@@ -10,9 +10,14 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun insertFollowing(following: Following): Long
         = withContext(IO) { userDao.insertFollowing(following) }
 
+    suspend fun deleteFollowing(following: Following)
+        = withContext(IO){ userDao.deleteFollowing(following)}
+
     fun getAllUsers() = userDao.getAllUsers()
 
     fun getUser(userId: Long) = userDao.getUser(userId)
+
+    fun getUserByUserName(username : String) = userDao.getUserByUserName(username)
 
     fun getUserWithSimpleWorkouts(userId: Long) = userDao.getUserWithSimpleWorkouts(userId)
 

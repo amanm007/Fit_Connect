@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:background="#000000">
+    <RelativeLayout
+        android:id="@+id/create_account_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <TextView
+            android:id="@+id/create_account_title_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registration"
+            android:textColor="#FFFFFF"
+            android:textSize="48dp"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/create_account_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/create_account_title_txt"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_launcher_background"
+            />
+
+        <LinearLayout
+            android:id="@+id/create_account_image_button_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="40dp"
+            android:layout_below="@id/create_account_title_txt"
+            android:layout_toRightOf="@id/create_account_image"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/create_account_take_picture_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/take_picture"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+            <Button
+                android:id="@+id/create_account_choose_picture_btn"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_picture"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/create_account_username_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_account_image"
+            android:layout_marginTop="48dp"
+            android:paddingLeft="20dp"
+            android:hint="@string/username"
+            android:background="@drawable/ic_rounded_background"/>
+
+        <EditText
+            android:id="@+id/create_account_firstname_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_account_username_edit"
+            android:layout_marginTop="32dp"
+            android:paddingLeft="20dp"
+            android:hint="@string/first_name"
+            android:background="@drawable/ic_rounded_background"/>
+
+        <EditText
+            android:id="@+id/create_account_lastname_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_account_firstname_edit"
+            android:layout_marginTop="32dp"
+            android:paddingLeft="20dp"
+            android:hint="@string/last_name"
+            android:background="@drawable/ic_rounded_background"/>
+
+        <EditText
+            android:id="@+id/create_account_email_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_account_lastname_edit"
+            android:layout_marginTop="32dp"
+            android:paddingLeft="20dp"
+            android:hint="@string/email"
+            android:background="@drawable/ic_rounded_background"/>
+
+        <EditText
+            android:id="@+id/create_account_password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_account_email_edit"
+            android:layout_marginTop="64dp"
+            android:inputType="textPassword"
+            android:paddingLeft="20dp"
+            android:hint="@string/password"
+            android:background="@drawable/ic_rounded_background"/>
+
+        <EditText
+            android:id="@+id/create_account_confirm_password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/create_account_password_edit"
+            android:inputType="textPassword"
+            android:layout_marginTop="32dp"
+            android:paddingLeft="20dp"
+            android:hint="@string/enter_password_again"
+            android:background="@drawable/ic_rounded_background" />
+
+
+        <!-- Button Layout -->
+        <LinearLayout
+            android:id="@+id/create_account_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/create_account_confirm_password_edit"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:paddingRight="32dp"
+            android:paddingLeft="32dp">
+
+            <Button
+                android:id="@+id/create_account_close_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textSize="24dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:cornerRadius="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/create_account_create_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create"
+                android:textSize="24dp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                app:cornerRadius="0dp"/>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
