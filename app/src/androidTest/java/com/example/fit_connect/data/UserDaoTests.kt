@@ -9,10 +9,10 @@ import com.example.fit_connect.data.user.UserDao
 import kotlinx.coroutines.runBlocking
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.fit_connect.TestUtil
+import com.example.fit_connect.data.SeedTestData.Companion.insertTestUser
+import com.example.fit_connect.data.SeedTestData.Companion.insertTestUsers
+import com.example.fit_connect.data.SeedTestData.Companion.insertTestWorkouts
 import com.example.fit_connect.data.SeedTestData.Companion.makeTestUser
-import com.example.fit_connect.data.SeedTestData.Companion.makeTestWorkout
-import com.example.fit_connect.data.user.User
-import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutDao
 import org.junit.After
 import org.junit.Before
@@ -91,23 +91,11 @@ class UserDaoTests {
     @Test
     fun getUserWithSimpleWorkouts() = runBlocking {
         val expectedUser = insertTestUsers(userDao, SeedTestData.testUsers).first()
-        val expectedWorkouts = insertTestWorkouts(workoutDao, SeedTestData.testWorkouts).sortedBy { it.workoutId }
+        val expectedWorkouts = insertTestWorkouts(workoutDao, expectedUser.userId!!, SeedTestData.testWorkouts).sortedBy { it.workoutId }
 
         val userWithSimpleWorkouts = userDao.getUserWithSimpleWorkouts(expectedUser.userId!!).awaitValue()
         val workouts = userWithSimpleWorkouts.workouts.sortedBy { it.workoutId }
         assert(userWithSimpleWorkouts.user == expectedUser)
         assert(workouts == expectedWorkouts)
     }
-
-    private suspend fun insertTestUsers(userDao: UserDao, users: List<User>)
-        = users.map { insertTestUser(userDao, it) }
-
-    private suspend fun insertTestUser(userDao: UserDao, user: User)
-        = makeTestUser(userDao.insertUser(user))
-
-    private suspend fun insertTestWorkouts(workoutDao: WorkoutDao, workouts: List<Workout>)
-        = workouts.map { insertTestWorkout(workoutDao, it) }
-
-    private suspend fun insertTestWorkout(workoutDao: WorkoutDao, workout: Workout)
-        = makeTestWorkout(workout.workoutId!!, workoutDao.insertWorkout(workout))
 }
