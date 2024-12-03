@@ -82,6 +82,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         "Saturday"
     )
     private var recordslive : LiveData<Map<Workout, List<ExerciseWithSets>>>? = null
+    private var workoutslive : LiveData<Map<Workout, List<ExerciseWithSets>>>? =null
+
     private lateinit var volumeTxt : TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -158,6 +160,17 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 entries.add(BarEntry(i.toFloat(), durationStats[i].toFloat()/60))
             }
         }
+        else if(metric == "volume"){
+            for(i in 0 .. 6){
+                entries.add(BarEntry(i.toFloat(), volumeStats[i].toFloat()))
+            }
+        }
+        else if (metric == "reps"){
+            for(i in 0 .. 6){
+                entries.add(BarEntry(i.toFloat(), repsStats[i].toFloat()))
+            }
+        }
+
         else {
             records.forEachIndexed { index, record ->
                 val value = when (metric) {
@@ -262,6 +275,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     workouttime.text = (workout.duration.toFloat()/60).toString() + " hrs"
                     workoutlikes.text = workout.likes.toString() + " likes"
 
+                    val workoutIdList : MutableList<Long> = mutableListOf()
                     //Last Comment
                     if(workout.comments.isNotEmpty()){
                         val getComment = workout.comments[workout.comments.size-1]
@@ -272,9 +286,15 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                             commentImg.setImageBitmap(PhotoUtil.byteArrayToBitmap(getComment.imageData))
                         }
                         comment.text = getComment.comment
-                    }
-                    recordslive = workoutRepository.getWorkoutWithExercisesAndSets(listOf(workout.workoutId!!))
 
+                    }
+                    //Get All workout ids
+                    for(workouts in userWorkout.workouts){
+                        workoutIdList.add(workouts.workoutId!!)
+                    }
+
+                    recordslive = workoutRepository.getWorkoutWithExercisesAndSets(listOf(workout.workoutId!!))
+                    workoutslive = workoutRepository.getWorkoutWithExercisesAndSets(workoutIdList)
                 }
                 else{
                     workoutlayout.visibility = View.GONE
@@ -323,7 +343,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
     }
 
-
     private fun getCalendarInstance() : Calendar {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -347,6 +366,38 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 }
             }
         }
+        if(workoutslive != null){
+            workoutslive?.observe(viewLifecycleOwner){
+                workoutRecords ->
+                workoutslive?.removeObservers(viewLifecycleOwner)
+
+                for(i in 0 .. 6){
+                    volumeStats[i] = 0
+                    repsStats[i] = 0
+                }
+
+                if(workoutRecords != null){
+                    val workoutRecordList = helperMapWorkoutRecords(workoutRecords)
+
+                    val startdate = getCalendarInstance()
+                    val enddate = getCalendarInstance()
+                    enddate.add(Calendar.DAY_OF_MONTH, 1)
+
+
+                    for(i in 0 .. 6){
+                        for(records in workoutRecordList){
+                            if(records.date in startdate.timeInMillis .. enddate.timeInMillis){
+                                volumeStats[6-i] += records.volume
+                                repsStats[6-i] += records.reps
+                            }
+                        }
+                        startdate.add(Calendar.DAY_OF_MONTH, -1)
+                        enddate.add(Calendar.DAY_OF_MONTH, -1)
+                    }
+                    updateChart(listOf(), "duration")
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -354,6 +405,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         println("Destroy")
         if(recordslive != null) {
             recordslive?.removeObservers(viewLifecycleOwner)
+        }
+        if(workoutslive != null){
+            workoutslive?.removeObservers(viewLifecycleOwner)
         }
     }
 }
