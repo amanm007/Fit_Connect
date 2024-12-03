@@ -128,7 +128,7 @@ class LogExerciseFragment : Fragment() {
             try {
                 val workout = Workout(
                     timestamp = Date().time,
-                    duration = 0, // REMOVE THIS FIELD
+                    duration = 0, // UPDATE TO GET FROM INPUT
                     visible = false, // REMOVE THIS FIELD
                     userId = userId
                 )
