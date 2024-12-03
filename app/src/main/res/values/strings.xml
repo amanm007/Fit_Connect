@@ -18,6 +18,8 @@
     <string name="testing_prhistory">Testing prhistory</string>
     <string name="leg_day">Leg Day</string>
     <string name="time">Time</string>
+    <string name="time_colon">Time:</string>
+    <string name="duration_colon">Duration:</string>
     <string name="volume">Volume</string>
     <string name="workout">Workout</string>
     <string name="_0_likes">0 likes</string>
