@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fit_connect.R
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.user.UserRepository
 import com.example.fit_connect.data.workout.WorkoutRepository
-import com.example.fit_connect.databinding.FragmentExercisesBinding
 import com.example.fit_connect.databinding.FragmentWorkoutHistoryBinding
 import com.example.fit_connect.ui.UserActivity
 import com.example.fit_connect.ui.notifications.WorkoutHistory
@@ -42,16 +42,19 @@ class EmptyWorkoutFragment : Fragment(R.layout.empty_workout_page) {
         val exerciseName = arguments?.getString("exerciseName")
         val exerciseCategory = arguments?.getString("exerciseCategory")
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.exercisesRecyclerView)
+
         userRepo.getUserWithSimpleWorkouts(userId).observe(viewLifecycleOwner) {
             println("GET USER WITH SIMPLE WORKOUTS")
-            println(it)
-            view.findViewById<RecyclerView>(R.id.exercisesRecyclerView).apply {
+            it.workouts.forEach { w -> println(w) }
+            recyclerView.apply {
                 val workoutHistories = it.workouts.map { w ->
                     WorkoutHistory(
                         time = Date(w.timestamp),
                         duration = w.duration.toLong()
                     )
                 }
+                layoutManager = LinearLayoutManager(requireContext())
                 adapter = WorkoutHistoryAdapter(workoutHistories)
             }
         }
