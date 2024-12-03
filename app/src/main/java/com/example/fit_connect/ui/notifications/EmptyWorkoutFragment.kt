@@ -79,6 +79,8 @@ class EmptyWorkoutFragment : Fragment(R.layout.empty_workout_page) {
         view.findViewById<View>(R.id.finishButton).setOnClickListener {
             // Handle finish workout
         }
+
+
     }
 
     private fun setupRecyclerView() {

@@ -58,6 +58,35 @@ class WorkoutFragment : Fragment(R.layout.workout_front_page) {
             // Handle leg day routine
             startWorkoutRoutine("LEG DAY")
         }
+
+        view.findViewById<MaterialButton>(R.id.startChestRoutineButton).setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_navigation_profile_to_exercisesFragment)
+            } catch (e: Exception) {
+                Log.e("WorkoutFragment", "Navigation failed", e)
+                Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        view.findViewById<MaterialButton>(R.id.startShoulderRoutineButton).setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_navigation_profile_to_exercisesFragment)
+            } catch (e: Exception) {
+                Log.e("WorkoutFragment", "Navigation failed", e)
+                Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        view.findViewById<MaterialButton>(R.id.startLegRoutineButton).setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_navigation_profile_to_exercisesFragment)
+            } catch (e: Exception) {
+                Log.e("WorkoutFragment", "Navigation failed", e)
+                Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
     }
 
     private fun startEmptyWorkout() {
