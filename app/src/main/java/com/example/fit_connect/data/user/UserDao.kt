@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 
 @Dao
 interface UserDao {
@@ -17,6 +18,9 @@ interface UserDao {
 
     @Delete
     suspend fun deleteFollowing(following : Following)
+
+    @Update
+    suspend fun updateUser(user : User): Int
 
     @Query("SELECT * FROM $USER_TABLE_NAME")
     fun getAllUsers(): LiveData<List<User>>

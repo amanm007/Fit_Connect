@@ -19,6 +19,11 @@ class WorkoutRepository(private val workoutDao: WorkoutDao) {
     suspend fun insertSet(set: ExerciseSet): Long
         = withContext(IO) { workoutDao.insertSet(set) }
 
+    suspend fun updateWorkout(workout: Workout): Int
+        = withContext(IO) {workoutDao.updateWorkout(workout)}
+
+    fun getWorkout(workoutId : Long) = workoutDao.getWorkout(workoutId)
+
     fun getExerciseType(exerciseTypeId: Long)
         = workoutDao.getExerciseType(exerciseTypeId)
 

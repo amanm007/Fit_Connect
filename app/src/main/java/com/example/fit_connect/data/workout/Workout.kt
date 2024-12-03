@@ -25,6 +25,10 @@ data class Workout(
     val duration: Int,
     val visible: Boolean,
 
+    var likes : Int = 0,
+    var comments : MutableList<Comments> = mutableListOf(),
+    var likedList : MutableList<Long> = mutableListOf(),
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = WORKOUT_ID_NAME)
     val workoutId: Long? = null,
