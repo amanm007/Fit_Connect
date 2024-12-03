@@ -170,7 +170,7 @@
                         android:textColor="#808080" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/startRoutineButton"
+                        android:id="@+id/startChestRoutineButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -213,6 +213,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/startShoulderRoutineButton"
                         android:layout_marginTop="8dp"
                         android:backgroundTint="#0066CC"
                         android:text="Start Routine"
@@ -254,6 +255,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:backgroundTint="#0066CC"
+                        android:id="@+id/startLegRoutineButton"
                         android:text="Start Routine"
                         android:textColor="@color/white" />
                 </LinearLayout>

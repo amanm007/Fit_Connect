@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_emptyWorkoutFragment"
             app:destination="@id/emptyWorkoutFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
     </fragment>
 
     <fragment
