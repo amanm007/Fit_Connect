@@ -55,16 +55,16 @@ class ExercisesFragment : Fragment() {
     private fun filterExercisesByRoutineType(exercises: List<ExerciseType>): List<ExerciseType> {
         return when (args.routineType) {
             "Chest" -> exercises.filter {
-                it.type.category.contains("chest", ignoreCase = true)
+                it.type.displayName in listOf("Bench Press", "Push Ups")
             }
             "Shoulder" -> exercises.filter {
-                it.type.category.contains("shoulder", ignoreCase = true)
+                it.type.displayName in listOf("Overhead Press", "Dumbbell Curl")
             }
             "Leg" -> exercises.filter {
-                it.type.category.contains("leg", ignoreCase = true) ||
-                        it.type.category.contains("quad", ignoreCase = true) ||
-                        it.type.category.contains("hamstring", ignoreCase = true) ||
-                        it.type.category.contains("calf", ignoreCase = true)
+                it.type.displayName in listOf("Squat", "Dead Lift")
+            }
+            "Back" -> exercises.filter {
+                it.type.displayName in listOf("Dead Lift", "Pull Ups", "Barbell Row")
             }
             else -> exercises
         }
