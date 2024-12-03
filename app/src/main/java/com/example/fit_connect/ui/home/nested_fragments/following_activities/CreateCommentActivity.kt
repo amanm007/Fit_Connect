@@ -1,4 +1,4 @@
-package com.example.fit_connect.ui.home.nested_fragments
+package com.example.fit_connect.ui.home.nested_fragments.following_activities
 
 import android.app.Activity
 import android.content.Intent
@@ -9,8 +9,6 @@ import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.fit_connect.R
-import com.example.fit_connect.databinding.ActivityCreateCommentBinding
-import com.example.fit_connect.databinding.ActivityMainBinding
 import com.example.fit_connect.ui.home.nested_fragments.listadapters.CommentListAdapter
 
 class CreateCommentActivity: AppCompatActivity() {

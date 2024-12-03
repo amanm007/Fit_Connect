@@ -7,11 +7,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fit_connect.R
+import com.example.fit_connect.data.workout.ExerciseType
 
-data class Exercise(val name: String, val category: String)
-
-class ExercisesAdapter(private val exercises: List<Exercise>) :
-    RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder>() {
+class ExercisesAdapter(
+    private val exercises: List<ExerciseType>,
+    private val onItemClicked: (ExerciseType) -> Unit
+) : RecyclerView.Adapter<ExercisesAdapter.ExerciseViewHolder>() {
 
     class ExerciseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val exerciseImage: ImageView = view.findViewById(R.id.exercise_image)
@@ -26,10 +27,16 @@ class ExercisesAdapter(private val exercises: List<Exercise>) :
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         val exercise = exercises[position]
-        holder.exerciseName.text = exercise.name
-        holder.exerciseCategory.text = exercise.category
+        holder.exerciseName.text = exercise.type.displayName
+        holder.exerciseCategory.text = exercise.type.category
         holder.exerciseImage.setImageResource(R.drawable.ic_launcher_background) // Replace with actual image
+
+        // Set click listener
+        holder.itemView.setOnClickListener {
+            onItemClicked(exercise)
+        }
     }
 
     override fun getItemCount() = exercises.size
 }
+

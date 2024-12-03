@@ -10,12 +10,10 @@ import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.user.UserDao
 import com.example.fit_connect.data.workout.Exercise
 import com.example.fit_connect.data.workout.ExerciseSet
-import com.example.fit_connect.data.workout.ExerciseToSet
 import com.example.fit_connect.data.workout.ExerciseType
 import com.example.fit_connect.data.workout.ExerciseTypeConverter
 import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutDao
-import com.example.fit_connect.data.workout.WorkoutToExercise
 
 const val DB_NAME = "fit_connect_db"
 
@@ -26,9 +24,7 @@ const val DB_NAME = "fit_connect_db"
         Workout::class,
         ExerciseType::class,
         Exercise::class,
-        ExerciseSet::class,
-        WorkoutToExercise::class,
-        ExerciseToSet::class,
+        ExerciseSet::class
     ],
     version = 1,
     exportSchema = false
@@ -50,6 +46,7 @@ abstract class FitConnectDatabase : RoomDatabase() {
                         FitConnectDatabase::class.java,
                         DB_NAME
                     )
+                    .addCallback(SeedDb().seed(context))
                     .build()
                 INSTANCE = instance
                 return instance

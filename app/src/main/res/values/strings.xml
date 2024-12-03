@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fit_Connect</string>
+    <string name="set_number">%d</string>
+    <string name="weight_reps_format">%.1flbs × %d</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -29,4 +31,26 @@
         <item>PR HISTORY</item>
     </string-array>
     <string name="Profile">Profile</string>
+    <string name="Workout">Workout</string>
+    <string name="fit_connect">Fit Connect</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="type_password_here">Type Password Here</string>
+    <string name="type_username_here">Type Username Here</string>
+    <string name="close">Close</string>
+    <string name="create_account">Create Account</string>
+    <string name="registration">Registration</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="cancel">Cancel</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="choose_picture">Choose Picture</string>
+    <string name="enter_password_again">Enter Password Again</string>
+    <string name="search_up_name">Search up name</string>
+    <string name="search">Search</string>
+    <string name="follow">Follow</string>
+    <string name="find_followers">Find Followers</string>
+    <string name="unfollow">Unfollow</string>
 </resources>

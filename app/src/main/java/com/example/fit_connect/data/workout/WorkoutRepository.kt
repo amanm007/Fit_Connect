@@ -19,6 +19,9 @@ class WorkoutRepository(private val workoutDao: WorkoutDao) {
     fun getExerciseType(exerciseTypeId: Long)
         = workoutDao.getExerciseType(exerciseTypeId)
 
+    fun getAllExerciseTypes()
+        = workoutDao.getAllExerciseTypes()
+
     fun getWorkoutWithExercises(workoutId: Long)
         = workoutDao.getWorkoutWithExercises(workoutId)
 
