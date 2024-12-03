@@ -142,5 +142,6 @@ class SeedDb {
                 exerciseId = exerciseIds[3]
             )
         )
+        val setIds = sets.map { s -> workoutDao.insertSet(s) }
     }
 }
