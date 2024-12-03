@@ -135,10 +135,12 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                     }
                 }
                 //Get all of the Exercises + Volume Quantity for Workout
-                val exerciseList : MutableList<Exercise> = mutableListOf()
+                var exerciseList : MutableList<Exercise> = mutableListOf()
                 val exercisesLiveData = workoutRepository.getWorkoutWithExercises(workout.workoutId)
+
                 exercisesLiveData.observe(context as LifecycleOwner){
                     workoutwihtexercises->
+                    exerciseList = mutableListOf()
                     if(workoutwihtexercises != null){
                         val exerciselist = workoutwihtexercises.exercises
                         for(exercise in exerciselist){
@@ -153,7 +155,7 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                     )
                     arrayAdapter.replace(exerciseList)
                     arrayAdapter.notifyDataSetChanged()
-                    followVolumeTxt.text = arrayAdapter.getVolume().toString() + " lbs"
+
                 }
 
             }

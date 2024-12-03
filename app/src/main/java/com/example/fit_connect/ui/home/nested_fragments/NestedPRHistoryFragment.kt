@@ -66,6 +66,7 @@ class NestedPRHistoryFragment: Fragment() {
         val liveWorkoutList = userRepository.getUserWithSimpleWorkouts(userId)
         liveWorkoutList.observe(requireContext() as LifecycleOwner) {
             workoutlist ->
+            println("Test1")
             exerciseHistoryList = mutableListOf()
             if (workoutlist != null) {
                 for (workout in workoutlist.workouts) {
@@ -77,11 +78,13 @@ class NestedPRHistoryFragment: Fragment() {
                                 exerciseHistoryList.add(exercise)
                             }
                         }
+                        arrayAdapter.replace(exerciseHistoryList)
+                        arrayAdapter.notifyDataSetChanged()
                     }
+
                 }
             }
-            arrayAdapter.replace(exerciseHistoryList)
-            arrayAdapter.notifyDataSetChanged()
+
         }
     }
 

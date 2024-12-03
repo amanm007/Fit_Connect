@@ -310,7 +310,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 }
                 val hrsthisweek = view.findViewById<TextView>(R.id.stats_title)
                 hrsthisweek.text = (hoursthisweek/60).toString() + " hours this week"
-                updateChart(viewModel.weeklyRecords.value ?: listOf(), "duration")
             }
         }
     }
@@ -322,5 +321,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND,0)
         return calendar
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateChart(viewModel.weeklyRecords.value ?: listOf(), "duration")
+        toggleButtonColors(durationButton)
     }
 }
