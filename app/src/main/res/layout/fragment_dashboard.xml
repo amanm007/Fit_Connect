@@ -352,6 +352,8 @@
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:layout_below="@id/dashboard_workout_time"
+                        android:layout_toRightOf="@id/dashboard_workout_time_value"
+                        android:layout_marginLeft="24dp"
                         android:layout_marginTop="6dp"/>
 
                     <View

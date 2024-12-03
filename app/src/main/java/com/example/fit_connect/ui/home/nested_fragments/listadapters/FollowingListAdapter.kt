@@ -16,12 +16,15 @@ import androidx.lifecycle.LifecycleOwner
 import com.anychart.core.annotations.Line
 import com.example.fit_connect.PhotoUtil
 import com.example.fit_connect.R
+import com.example.fit_connect.WorkoutRecord
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.user.Following
 import com.example.fit_connect.data.user.UserRepository
 import com.example.fit_connect.data.workout.Exercise
+import com.example.fit_connect.data.workout.ExerciseWithSets
 import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutRepository
+import com.example.fit_connect.helperMapWorkoutRecords
 import com.example.fit_connect.ui.home.nested_fragments.following_activities.CreateCommentActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -34,6 +37,7 @@ class FollowingListAdapter(private val context: Context, private var followingLi
 
     private val workout_id_string = "WORKOUT_ID"
     private val user_id_string = "USER_ID"
+    private val follower_id_string = "FOLLOWER_ID"
 
 
     private val database = FitConnectDatabase.getInstance(context)
@@ -98,6 +102,7 @@ class FollowingListAdapter(private val context: Context, private var followingLi
         //Get Workout list from Dao
         val followingWorkout = repository.getUserWithSimpleWorkouts(followingList[position].friendId)
         followingWorkout.observe(context as LifecycleOwner) { simpleWorkouts ->
+
             val workoutList = simpleWorkouts.workouts
 
             //Only fill information if an entry exists in the workout
@@ -116,7 +121,7 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                 //Setup btn
                 //Like
                 setupLikeBtn(followLikebtn, context, position, workout)
-                setupCommentBtn(followCommentbtn, context, workout.workoutId!!)
+                setupCommentBtn(followCommentbtn, context, workout.workoutId!!, followingList[position].friendId)
 
                 //Set Last Comment Made
                 val commentList = workout.comments
@@ -157,21 +162,22 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                     arrayAdapter.notifyDataSetChanged()
 
                 }
+                val workoutgetVolume = workoutRepository.getWorkoutWithExercisesAndSets(listOf(workout.workoutId))
+                workoutgetVolume.observe(context as LifecycleOwner){
+                    workoutgetvol ->
+                    if(workoutgetvol != null){
+                        val records = helperMapWorkoutRecords(workoutgetvol)
+                        if(records.isNotEmpty()){
+                            followVolumeTxt.text = records[0].volume.toString() + " lbs"
+                        }
+                    }
+                }
 
             }
             else{
                 println("Bye")
             }
         }
-
-
-        /*
-
-        followWorkoutList.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            (80 * arrayList.size * context.resources.displayMetrics.density).toInt()
-        )
-        */
 
         return customView
         }
@@ -206,13 +212,14 @@ class FollowingListAdapter(private val context: Context, private var followingLi
             updateWorkout(workout)
         }
     }
-    private fun setupCommentBtn(btn : ImageButton, context: Context, workoutId: Long){
+    private fun setupCommentBtn(btn : ImageButton, context: Context, workoutId: Long, followerId : Long){
         btn.setOnClickListener(){
             val intent = Intent(context, CreateCommentActivity::class.java)
 
             //Put Extra Vals into intent (maybe just the id?)
             intent.putExtra(workout_id_string, workoutId)
             intent.putExtra(user_id_string, userId)
+            intent.putExtra(follower_id_string, followerId)
 
             if(context is Activity){
                 context.startActivity(intent)

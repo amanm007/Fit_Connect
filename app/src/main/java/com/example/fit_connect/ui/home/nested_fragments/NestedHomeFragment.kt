@@ -452,8 +452,12 @@ class NestedHomeFragment: Fragment() {
             var atmost3 = 0
 
             if (workoutlist != null) {
-                for (workout in workoutlist.workouts) {
-                    val liveExerciseList = workoutRepository.getWorkoutWithExercises(workout.workoutId!!)
+                val workoutListSize = workoutlist.workouts.size
+                println(workoutListSize)
+                for (i in 0 .. workoutListSize-1) {
+                    val liveExerciseList = workoutRepository.getWorkoutWithExercises(
+                        workoutlist.workouts[(workoutListSize-1)-i].workoutId!!)
+
                     liveExerciseList.observe(requireContext() as LifecycleOwner){
                             exerciselist ->
                         if(exerciselist != null){
