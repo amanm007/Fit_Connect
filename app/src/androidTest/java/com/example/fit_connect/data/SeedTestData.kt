@@ -4,6 +4,7 @@ import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.user.UserDao
 import com.example.fit_connect.data.user.UserWithSimpleWorkout
 import com.example.fit_connect.data.workout.Exercise
+import com.example.fit_connect.data.workout.ExerciseSet
 import com.example.fit_connect.data.workout.ExerciseType
 import com.example.fit_connect.data.workout.ExerciseTypeEnum
 import com.example.fit_connect.data.workout.Workout
@@ -16,8 +17,17 @@ class SeedTestData {
             = users.map { insertTestUser(userDao, it) }
         suspend fun insertTestUser(userDao: UserDao, user: User)
             = makeTestUser(userDao.insertUser(user))
-        fun makeTestUser(id: Long? = null): User
-            = User("testFirst", "testLast", "testEmail", id)
+        fun makeTestUser(id: Long? = null)
+            = User(
+                "testFirst",
+                "testLast",
+                "testUser-$id",
+                "testEmail",
+                "pass",
+                0,
+                ByteArray(0),
+                id
+            )
         val testUsers = listOf(
             makeTestUser(1),
             makeTestUser(2),
@@ -66,6 +76,20 @@ class SeedTestData {
         val testExercises = listOf(
             makeTestExercise(testWorkouts.first().workoutId!!, testExerciseTypes.first().exerciseTypeId!!, 1),
             makeTestExercise(testWorkouts.first().workoutId!!, testExerciseTypes[1].exerciseTypeId!!, 2)
+        )
+
+        suspend fun insertTestSets(workoutDao: WorkoutDao, exerciseId: Long, sets: List<ExerciseSet>)
+            = sets.map { insertTestSet(workoutDao, exerciseId, it) }
+        suspend fun insertTestSet(workoutDao: WorkoutDao, exerciseId: Long, set: ExerciseSet): ExerciseSet {
+            val s = makeTestSet(exerciseId, set.setId)
+            val eId = workoutDao.insertSet(s)
+            return makeTestSet(exerciseId, eId)
+        }
+        fun makeTestSet(exerciseId: Long, id: Long? = null)
+            = ExerciseSet(1, 1, id, exerciseId)
+        val testSets = listOf(
+            makeTestSet(testExercises.first().exerciseId!!, 1),
+            makeTestSet(testExercises.first().exerciseId!!, 2)
         )
     }
 }

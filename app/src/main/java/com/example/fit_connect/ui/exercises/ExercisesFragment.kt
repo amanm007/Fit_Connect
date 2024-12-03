@@ -60,7 +60,10 @@ class ExercisesFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ExercisesAdapter(filteredExercises) { exercise ->
                 findNavController().navigate(
-                    ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(exercise.type.displayName)
+                    ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(
+                        exercise.type.displayName,
+                        exercise.exerciseTypeId!!
+                    )
                 )
             }
         }
@@ -103,7 +106,10 @@ class ExercisesFragment : Fragment() {
     private fun updateRecyclerView() {
         binding.exercisesRecyclerView.adapter = ExercisesAdapter(filteredExercises) { exercise ->
             findNavController().navigate(
-                ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(exercise.type.displayName)
+                ExercisesFragmentDirections.actionExercisesFragmentToLogExerciseFragment(
+                    exercise.type.displayName,
+                    exercise.exerciseTypeId!!
+                )
             )
         }
     }

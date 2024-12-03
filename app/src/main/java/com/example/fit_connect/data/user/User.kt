@@ -9,7 +9,7 @@ const val USER_TABLE_NAME = "user"
 const val USER_ID_NAME = "user_id"
 const val USER_USERNAME = "username"
 
-@Entity(tableName = USER_TABLE_NAME, indices = [Index(value = ["username"], unique = true)])
+@Entity(tableName = USER_TABLE_NAME, indices = [Index(value = [USER_USERNAME], unique = true)])
 data class User(
     val firstName: String,
     val lastName: String,

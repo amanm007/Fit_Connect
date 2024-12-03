@@ -7,13 +7,13 @@ import androidx.room.TypeConverter
 
 enum class ExerciseTypeEnum(val id: Int, val displayName: String, val category: String) {
     BenchPress(0, "Bench Press", "Chest"),
-    Squat(0, "Squat", "Legs"),
-    DeadLift(0, "Dead Lift", "Back"),
-    OverheadPress(0, "Overhead Press", "Shoulders"),
-    PullUps(0, "Pull Ups", "Back"),
-    PushUps(0, "Push Ups", "Chest"),
-    BarbellRow(0, "Barbell Row", "Back"),
-    DumbbellCurl(0, "Dumbbell Curl", "Arms")
+    Squat(1, "Squat", "Legs"),
+    DeadLift(2, "Dead Lift", "Back"),
+    OverheadPress(3, "Overhead Press", "Shoulders"),
+    PullUps(4, "Pull Ups", "Back"),
+    PushUps(5, "Push Ups", "Chest"),
+    BarbellRow(6, "Barbell Row", "Back"),
+    DumbbellCurl(7, "Dumbbell Curl", "Arms")
 }
 
 const val EXERCISE_TYPE_TABLE_NAME = "exerciseType"

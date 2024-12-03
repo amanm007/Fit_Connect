@@ -57,4 +57,6 @@ class WorkoutSetsAdapter : RecyclerView.Adapter<WorkoutSetsAdapter.SetViewHolder
         sets.add(WorkoutSet(sets.size + 1, weight, reps))
         notifyItemInserted(sets.size - 1)
     }
+
+    fun getSets() = sets.toList()
 }

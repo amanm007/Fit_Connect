@@ -55,6 +55,9 @@
         <argument
             android:name="exerciseName"
             app:argType="string" />
+        <argument
+            android:name="exerciseTypeId"
+            app:argType="long" />
         <action
             android:id="@+id/action_logExerciseFragment_to_exercisesFragment"
             app:destination="@id/exercisesFragment" />
