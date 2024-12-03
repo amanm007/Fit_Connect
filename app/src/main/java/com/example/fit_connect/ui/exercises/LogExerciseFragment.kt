@@ -138,7 +138,6 @@ class LogExerciseFragment : Fragment() {
                     exerciseTypeId = args.exerciseTypeId
                 )
                 val exerciseId = workoutRepo.insertExercise(exercise)
-
                 setsAdapter.getSets()
                     .map {
                         ExerciseSet(
@@ -148,7 +147,6 @@ class LogExerciseFragment : Fragment() {
                         )
                     }
                     .map { workoutRepo.insertSet(it) }
-
             } catch (e: Exception) {
                 Log.e("LogExerciseFragment", "Error saving workout: ${e.message}", e)
             }

@@ -7,14 +7,16 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.fit_connect.PhotoUtil
 import com.example.fit_connect.R
+import com.example.fit_connect.data.workout.Comments
 
-class CommentListAdapter (private val context: Context, private var arrayList:ArrayList<String>) : BaseAdapter(){
+class CommentListAdapter (private val context: Context, private var arrayList:MutableList<Comments>) : BaseAdapter(){
     private val calendar: Calendar = Calendar.getInstance()
     override fun getCount(): Int{
         return arrayList.size
     }
-    override fun getItem(position: Int): String{
+    override fun getItem(position: Int): Comments{
         return arrayList[position]
     }
     override fun getItemId(position: Int) : Long{
@@ -25,18 +27,23 @@ class CommentListAdapter (private val context: Context, private var arrayList:Ar
         val customView: View = View.inflate(context, R.layout.comment_listadapter, null)
 
         val commentProfileImg : ImageView = customView.findViewById(R.id.comment_profile_img)
-        val commentName : TextView = customView.findViewById(R.id.comment_name_txt)
         val comment: TextView = customView.findViewById(R.id.comment_txt)
-        val recentComment : TextView = customView.findViewById(R.id.comment_recency)
 
+        if(arrayList[position].imageData.size == 0) {
+            commentProfileImg.setImageResource(R.drawable.ic_launcher_background)
+        }
+        else{
+            commentProfileImg.setImageBitmap(
+                PhotoUtil.byteArrayToBitmap(arrayList[position].imageData!!)
+            )
+        }
 
-        commentProfileImg.setImageResource(R.drawable.defaultpacman)
-        commentName.text = "Pacman"
-        comment.text = arrayList[position]
-        recentComment.text = "Just Now"
+        comment.text = arrayList[position].comment
 
         return customView
     }
-
+    fun replace(comments : MutableList<Comments>){
+        arrayList = comments
+    }
 
 }

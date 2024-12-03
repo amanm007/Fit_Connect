@@ -31,5 +31,6 @@ class Following(
     @ColumnInfo(name = USER_ID_NAME)
     val userId: Long,
     @ColumnInfo(name = FRIEND_ID_NAME)
-    val friendId: Long
+    val friendId: Long,
+    val friendName : String,
 )

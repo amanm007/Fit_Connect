@@ -20,6 +20,18 @@ class ExercisesAdapter(
         val exerciseCategory: TextView = view.findViewById(R.id.exercise_category)
     }
 
+    val exerciseImages = listOf(
+        R.drawable.bench_press,
+        R.drawable.squat,
+        R.drawable.deadlift,
+        R.drawable.overheadpress,
+        R.drawable.pullups,
+        R.drawable.pushups,
+        R.drawable.barbellrow,
+        R.drawable.dumbellcurl
+    )
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_exercise, parent, false)
         return ExerciseViewHolder(view)
@@ -29,8 +41,13 @@ class ExercisesAdapter(
         val exercise = exercises[position]
         holder.exerciseName.text = exercise.type.displayName
         holder.exerciseCategory.text = exercise.type.category
-        holder.exerciseImage.setImageResource(R.drawable.ic_launcher_background) // Replace with actual image
 
+        if(exercise.type.id in 0 .. 7){
+            holder.exerciseImage.setImageResource(exerciseImages[exercise.type.id])
+        }
+        else {
+            holder.exerciseImage.setImageResource(R.drawable.ic_launcher_background) // Replace with actual image
+        }
         // Set click listener
         holder.itemView.setOnClickListener {
             onItemClicked(exercise)
