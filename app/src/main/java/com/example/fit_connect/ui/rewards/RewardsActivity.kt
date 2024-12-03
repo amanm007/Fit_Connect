@@ -21,9 +21,9 @@ class RewardsActivity : AppCompatActivity() {
 
         // Populate with fake data for now
         val rewardsList = listOf(
-            RewardData("Heaviest Lift", "90 lbs - Bicep Curl (Machine)", R.drawable.ic_medal),
-            RewardData("Weekly Streak", "11-week streak! Keep it going!", R.drawable.ic_fire),
-            RewardData("Total Volume", "28,664 lbs lifted last week", R.drawable.ic_truck),
+            RewardData("Heaviest Lift", "225 lbs - Bench Press", R.drawable.ic_medal),
+            RewardData("Weekly lift", " Keep it going!", R.drawable.ic_fire),
+            RewardData("Total Volume", " lifted last week", R.drawable.ic_truck),
             RewardData("Workout Duration", "1 hr 57 mins, 7 exercises, 33 sets", R.drawable.ic_stats)
         )
 
