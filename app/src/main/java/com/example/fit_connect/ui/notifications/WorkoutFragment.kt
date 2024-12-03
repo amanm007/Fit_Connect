@@ -59,6 +59,11 @@ class WorkoutFragment : Fragment(R.layout.workout_front_page) {
             startWorkoutRoutine("LEG DAY")
         }
 
+        view.findViewById<MaterialCardView>(R.id.backDayRoutine).setOnClickListener {
+            // Handle back day routine
+            startWorkoutRoutine("BACK DAY")
+        }
+
         view.findViewById<MaterialButton>(R.id.startChestRoutineButton).setOnClickListener {
             try {
                 val directions = WorkoutFragmentDirections
@@ -85,6 +90,17 @@ class WorkoutFragment : Fragment(R.layout.workout_front_page) {
             try {
                 val directions = WorkoutFragmentDirections
                     .actionNavigationProfileToExercisesFragment(routineType = "Leg")
+                findNavController().navigate(directions)
+            } catch (e: Exception) {
+                Log.e("WorkoutFragment", "Navigation failed", e)
+                Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        view.findViewById<MaterialButton>(R.id.startBackRoutineButton).setOnClickListener {
+            try {
+                val directions = WorkoutFragmentDirections
+                    .actionNavigationProfileToExercisesFragment(routineType = "Back")
                 findNavController().navigate(directions)
             } catch (e: Exception) {
                 Log.e("WorkoutFragment", "Navigation failed", e)
