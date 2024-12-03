@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Date -->
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: Dec 2, 2024"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Body Weight -->
+        <TextView
+            android:id="@+id/bodyWeightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weight: 175.5 lbs"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Waist -->
+        <TextView
+            android:id="@+id/waistTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waist: 85 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Additional Measurements -->
+        <!-- Neck -->
+        <TextView
+            android:id="@+id/neckTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Neck: 35 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Shoulder -->
+        <TextView
+            android:id="@+id/shoulderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shoulder: 50 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Chest -->
+        <TextView
+            android:id="@+id/chestTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chest: 95 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Bicep -->
+        <TextView
+            android:id="@+id/bicepTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bicep: 30 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Forearm -->
+        <TextView
+            android:id="@+id/forearmTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forearm: 25 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Abdomen -->
+        <TextView
+            android:id="@+id/abdomenTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Abdomen: 90 cm"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

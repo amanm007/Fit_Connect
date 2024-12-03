@@ -23,6 +23,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var repsButton: Button
     private lateinit var exercisesButton: Button
     private lateinit var calendarButton: Button
+    private lateinit var measuresButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +35,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         repsButton = view.findViewById(R.id.repsButton)
         exercisesButton = view.findViewById(R.id.exercisesButton)
         calendarButton=view.findViewById(R.id.calendarButton)
+        measuresButton=view.findViewById(R.id.measuresButton)
 
 
 
@@ -63,6 +65,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             updateChart(viewModel.weeklyRecords.value ?: listOf(), "reps")
             toggleButtonColors(repsButton)
         }
+        measuresButton.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_measurementFragment)
+        }
+
 
         // Observe weekly records from ViewModel
         viewModel.weeklyRecords.observe(viewLifecycleOwner) { records ->

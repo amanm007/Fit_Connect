@@ -22,8 +22,25 @@
         <action
             android:id="@+id/action_dashboardFragment_to_calendarFragment"
             app:destination="@id/calendarFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_measurementFragment"
+            app:destination="@id/measurementFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/measurementFragment"
+        android:name="com.example.fit_connect.ui.dashboard.measurements.MeasurementFragment"
+        android:label="Measurements"
+        tools:layout="@layout/fragment_measurement">
+        <action
+            android:id="@+id/action_measurementFragment_to_addMeasurementFragment"
+            app:destination="@id/addMeasurementFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMeasurementFragment"
+        android:name="com.example.fit_connect.ui.dashboard.measurements.AddMeasurementFragment"
+        android:label="Add Measurement"
+        tools:layout="@layout/fragment_add_measurement" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.fit_connect.ui.notifications.WorkoutFragment"
@@ -75,6 +92,7 @@
             android:id="@+id/action_emptyWorkoutFragment_to_exercisesFragment"
             app:destination="@id/exercisesFragment" />
     </fragment>
+
 
     <action
         android:id="@+id/action_global_exercisesFragment"

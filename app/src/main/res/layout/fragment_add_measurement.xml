@@ -1,0 +1,67 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/bodyWeightInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Body Weight (lbs)" />
+
+        <EditText
+            android:id="@+id/waistInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Waist (cm)" />
+        <EditText
+            android:id="@+id/bodyFatInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Body Fat %" />
+        <EditText
+            android:id="@+id/neckInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Neck(cm)" />
+        <EditText
+            android:id="@+id/shoulderInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Shoulder(cm)" />
+        <EditText
+            android:id="@+id/chestInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chest(cm) %" />
+        <EditText
+            android:id="@+id/bicepInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bicep (cm)" />
+        <EditText
+            android:id="@+id/forearmInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Forearm (cm)" />
+        <EditText
+            android:id="@+id/abdomenInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Abdomen (cm)" />
+
+
+
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save" />
+    </LinearLayout>
+</ScrollView>
