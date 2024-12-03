@@ -48,9 +48,9 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_settings"
-                android:tint="@color/white"
                 android:layout_weight="1"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                app:tint="@color/white" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 

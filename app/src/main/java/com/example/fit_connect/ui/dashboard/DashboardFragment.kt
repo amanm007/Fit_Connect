@@ -36,6 +36,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         calendarButton=view.findViewById(R.id.calendarButton)
 
 
+
         // Set click listener for navigating to ExercisesFragment
         exercisesButton.setOnClickListener {
             findNavController().navigate(R.id.action_dashboardFragment_to_exercisesFragment)
@@ -71,19 +72,18 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private fun updateChart(records: List<WorkoutRecord>, metric: String) {
         val entries = ArrayList<BarEntry>()
+        val fakeData = when (metric) {
+            "duration" -> listOf(2f, 4f, 3f, 6f, 5f, 7f, 4f) // Hours for each day
+            "volume" -> listOf(1000f, 1500f, 1200f, 2000f, 1800f, 2500f, 2300f) // Weight in pounds
+            "reps" -> listOf(50f, 80f, 65f, 90f, 70f, 100f, 85f) // Total reps
+            else -> listOf(0f, 0f, 0f, 0f, 0f, 0f, 0f) // Default to empty data
+        }
 
-        // Populate chart entries
-        records.forEachIndexed { index, record ->
-            val value = when (metric) {
-                "duration" -> record.duration.toFloat()
-                "volume" -> record.volume.toFloat()
-                "reps" -> record.reps.toFloat()
-                else -> 0f
-            }
+        // Add data points to the chart
+        fakeData.forEachIndexed { index, value ->
             entries.add(BarEntry(index.toFloat(), value))
         }
 
-        // Set up BarDataSet and customize appearance
         val dataSet = BarDataSet(entries, metric.capitalize())
         dataSet.color = resources.getColor(R.color.blue, null)
         dataSet.valueTextColor = Color.WHITE
@@ -91,6 +91,12 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         val data = BarData(dataSet)
         chart.data = data
+        chart.description.isEnabled = false
+        chart.axisLeft.textColor = Color.WHITE
+        chart.axisRight.textColor = Color.WHITE
+        chart.xAxis.textColor = Color.WHITE
+        chart.legend.textColor = Color.WHITE
+
         chart.invalidate() // Refresh the chart
     }
 

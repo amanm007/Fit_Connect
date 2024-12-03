@@ -22,6 +22,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         addFakeData()
+
     }
 
     fun loadWeeklyRecords(startDate: Long, endDate: Long) {
