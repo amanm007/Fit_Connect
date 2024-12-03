@@ -46,6 +46,7 @@ android {
 
 dependencies {
     implementation("com.github.Anychart:AnyChart-Android:1.1.5")
+    implementation("com.github.lecho:hellocharts-library:1.5.8")
 
     // AndroidX Libraries
     implementation("androidx.core:core-ktx:1.12.0")

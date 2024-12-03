@@ -21,6 +21,8 @@ data class User(
     var password : String = "", //Password Stored as a string
     var laston : Long = 0, //Displays when the user was last online stored in long as a timestamp
     var imageData : ByteArray? = null,
+    var followers : Int = 0,
+
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = USER_ID_NAME)
     val userId: Long? = null
