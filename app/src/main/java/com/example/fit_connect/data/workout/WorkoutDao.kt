@@ -30,6 +30,9 @@ interface WorkoutDao {
     @Query("SELECT * FROM $WORKOUT_TABLE_NAME WHERE $WORKOUT_ID_NAME = :workoutId")
     fun getWorkoutWithExercises(workoutId: Long): LiveData<WorkoutWithExercises>
 
+    @Query("SELECT * FROM $WORKOUT_TABLE_NAME WHERE user_id = :userId AND timestamp BETWEEN :startDate AND :endDate")
+    fun getUserWorkoutsInDateRange(userId: Long, startDate: Long, endDate: Long): LiveData<List<Workout>>
+
     @Transaction
     @Query("SELECT * FROM $EXERCISE_TABLE_NAME WHERE $EXERCISE_ID_NAME = :exerciseId")
     fun getExerciseWithSets(exerciseId: Long): LiveData<ExerciseWithSets>
