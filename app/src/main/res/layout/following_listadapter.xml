@@ -57,7 +57,7 @@
             android:id="@+id/workout_day_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/leg_day"
+            android:text="@string/last_workout"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:paddingTop="15dp"
@@ -115,25 +115,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="40dp">
-                <TextView
-                    android:text="Records"
-                    android:textColor="#FFFFFF"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/following_records_txt"
-                    android:layout_width="wrap_content"
-                    android:textColor="#FFFFFF"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="5dp"/>
-
-            </LinearLayout>
 
 
         </LinearLayout>

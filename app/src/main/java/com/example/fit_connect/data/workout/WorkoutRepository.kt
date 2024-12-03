@@ -1,5 +1,6 @@
 package com.example.fit_connect.data.workout
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
@@ -18,6 +19,8 @@ class WorkoutRepository(private val workoutDao: WorkoutDao) {
 
     suspend fun updateWorkout(workout: Workout): Int
         = withContext(IO) {workoutDao.updateWorkout(workout)}
+
+    fun getWorkout(workoutId : Long) = workoutDao.getWorkout(workoutId)
 
     fun getExerciseType(exerciseTypeId: Long)
         = workoutDao.getExerciseType(exerciseTypeId)

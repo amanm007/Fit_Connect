@@ -26,9 +26,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
+
+
 class FollowingListAdapter(private val context: Context, private var followingList:List<Following>
-                            , private var userId : Long) : BaseAdapter(){
-    private val ACTIVITY_REQUEST_CODE = 1000000
+                           , private var userId : Long) : BaseAdapter(){
+
+    private val workout_id_string = "WORKOUT_ID"
+    private val user_id_string = "USER_ID"
+
+
     private val database = FitConnectDatabase.getInstance(context)
     private val userDatabaseDao = database.userDao()
     private val workutDatabaseDao = database.workoutDao()
@@ -72,7 +78,6 @@ class FollowingListAdapter(private val context: Context, private var followingLi
         val followWorkoutDayTxt : TextView = customView.findViewById(R.id.workout_day_txt)
         val followTimeTxt : TextView = customView.findViewById(R.id.following_time_txt)
         val followVolumeTxt : TextView = customView.findViewById(R.id.following_volume_txt)
-        val followRecordsTxt : TextView = customView.findViewById(R.id.following_records_txt)
         val followWorkoutList : ListView = customView.findViewById(R.id.following_workout_listview)
 
         val followNumberLikesTxt :TextView = customView.findViewById(R.id.number_likes_txt)
@@ -97,19 +102,32 @@ class FollowingListAdapter(private val context: Context, private var followingLi
 
                 //Get Most Recent Workout
                 val workout = workoutList[workoutList.size - 1]
-                followTimeTxt.text = workout.duration.toString()
+                followTimeTxt.text = (workout.duration.toDouble() / 60).toString() + " hrs"
                 followVolumeTxt.text = "0 lbs"
-                followRecordsTxt.text = "0"
                 followNumberLikesTxt.text = workout.likes.toString()  + " likes"
                 followNumberCommentTxt.text = workout.comments.size.toString() + " comments"
 
                 //Setup btn
                 //Like
                 setupLikeBtn(followLikebtn, context, position, workout)
-                setupCommentBtn(followCommentbtn, context, position, workout)
+                setupCommentBtn(followCommentbtn, context, workout.workoutId!!)
 
-                followLastCommentImg.setImageResource(R.drawable.defaultpacman)
-                followCommentTxt.text = "PACMAN2:    GIT GUD"
+                //Set Last Comment Made
+                val commentList = workoutList[workoutList.size-1].comments
+                if(commentList.isNotEmpty()) {
+
+                    val lastComment = commentList[commentList.size-1]
+                    followCommentTxt.text = lastComment.comment
+
+                    if(lastComment.imageData.size != 0){
+                        followLastCommentImg.setImageBitmap(
+                            PhotoUtil.byteArrayToBitmap(lastComment.imageData)
+                        )
+                    }
+                    else{
+                        followLastCommentImg.setImageResource(R.drawable.ic_launcher_background)
+                    }
+                }
             }
             else{
                 println("Bye")
@@ -164,14 +182,16 @@ class FollowingListAdapter(private val context: Context, private var followingLi
             updateWorkout(workout)
         }
     }
-    private fun setupCommentBtn(btn : ImageButton, context: Context, position: Int, workout: Workout){
+    private fun setupCommentBtn(btn : ImageButton, context: Context, workoutId: Long){
         btn.setOnClickListener(){
             val intent = Intent(context, CreateCommentActivity::class.java)
 
             //Put Extra Vals into intent (maybe just the id?)
+            intent.putExtra(workout_id_string, workoutId)
+            intent.putExtra(user_id_string, userId)
 
             if(context is Activity){
-                context.startActivityForResult(intent, ACTIVITY_REQUEST_CODE)
+                context.startActivity(intent)
             }
         }
     }

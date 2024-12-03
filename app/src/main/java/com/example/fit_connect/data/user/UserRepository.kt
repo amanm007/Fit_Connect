@@ -13,6 +13,9 @@ class UserRepository(private val userDao: UserDao) {
     suspend fun deleteFollowing(following: Following)
         = withContext(IO){ userDao.deleteFollowing(following)}
 
+    suspend fun updateUser(user:User)
+        = withContext(IO) {(userDao.updateUser(user))}
+
     fun getAllUsers() = userDao.getAllUsers()
 
     fun getUser(userId: Long) = userDao.getUser(userId)

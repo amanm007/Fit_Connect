@@ -8,6 +8,9 @@ class WorkoutConverter {
     //Convert List to String
     @TypeConverter
     fun fromCommentList(commentList: MutableList<Comments>): String {
+        if(commentList.size == 0){
+            return ""
+        }
         return commentList.joinToString(";") {
             val base64Data = Base64.getEncoder().encodeToString(it.imageData)
             "$base64Data|${it.comment}"
@@ -16,6 +19,10 @@ class WorkoutConverter {
 
     @TypeConverter
     fun toCommentList(commentListString: String): MutableList<Comments> {
+        if(commentListString == ""){
+            return mutableListOf()
+        }
+
         if (commentListString.isEmpty()) return mutableListOf()
         return commentListString.split(";").mapNotNull {
             val parts = it.split("|")
@@ -29,6 +36,9 @@ class WorkoutConverter {
 
     @TypeConverter
     fun fromLongList(longList: MutableList<Long>): String {
+        if(longList.size == 0){
+            return ""
+        }
         return longList.joinToString(";")
     }
 

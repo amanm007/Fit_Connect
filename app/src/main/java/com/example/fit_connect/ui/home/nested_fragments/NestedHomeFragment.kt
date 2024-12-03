@@ -24,6 +24,7 @@ import com.example.fit_connect.R
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.user.UserDao
 import com.example.fit_connect.data.user.UserRepository
+import com.example.fit_connect.data.workout.Exercise
 import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutDao
 import com.example.fit_connect.data.workout.WorkoutRepository
@@ -83,9 +84,13 @@ class NestedHomeFragment: Fragment() {
         "Friday",
         "Saturday"
     )
+    //PR History (Only 3 most recent)
+    private var exerciseHistoryList : MutableList<Exercise>  = mutableListOf()
+    private lateinit var arrayAdapter : PRListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
+
 
         _binding = FragmentNestedHomeBinding.inflate(inflater, container, false)
         val root :  View = binding.root
@@ -115,7 +120,7 @@ class NestedHomeFragment: Fragment() {
             }
 
         }
-*/
+        */
         calculateWeeklyStreak(root)
         setFitGroupTrack(root)
         setPRHistory(root)
@@ -348,8 +353,8 @@ class NestedHomeFragment: Fragment() {
             PointValue(6f,userWorkoutDuration[6].toFloat()/60)
         )
         val values2 = mutableListOf(
-            PointValue(0f,followerWorkoutDuration1[0].toFloat() / 60),
-            PointValue(1f,followerWorkoutDuration1[1].toFloat() / 60),
+            PointValue(0f,followerWorkoutDuration1[0].toFloat()/60),
+            PointValue(1f,followerWorkoutDuration1[1].toFloat()/60),
             PointValue(2f,followerWorkoutDuration1[2].toFloat()/60),
             PointValue(3f,followerWorkoutDuration1[3].toFloat()/60),
             PointValue(4f,followerWorkoutDuration1[4].toFloat()/60),
@@ -433,6 +438,43 @@ class NestedHomeFragment: Fragment() {
     }
 
     private fun setPRHistory(root : View){
+        val prListView = root.findViewById<ListView>(R.id.pr_recent_list)
+
+        arrayAdapter = PRListAdapter(requireContext(), exerciseHistoryList)
+        prListView.adapter = arrayAdapter
+
+        //Observe (Yes its nested. It looks gross but i need to get all exercises)
+        //Only get 3 PR's
+        val liveWorkoutList = userRepository.getUserWithSimpleWorkouts(userId)
+        liveWorkoutList.observe(requireContext() as LifecycleOwner) {
+            workoutlist ->
+            exerciseHistoryList = mutableListOf()
+            var atmost3 = 0
+
+            if (workoutlist != null) {
+                for (workout in workoutlist.workouts) {
+                    val liveExerciseList = workoutRepository.getWorkoutWithExercises(workout.workoutId!!)
+                    liveExerciseList.observe(requireContext() as LifecycleOwner){
+                            exerciselist ->
+                        if(exerciselist != null){
+                            for(exercise in exerciselist.exercises){
+                                exerciseHistoryList.add(exercise)
+                                atmost3++
+                                if(atmost3 == 3){
+                                    break
+                                }
+                            }
+                        }
+                    }
+                    if(atmost3 == 3){
+                        break
+                    }
+                }
+            }
+            arrayAdapter.replace(exerciseHistoryList)
+            arrayAdapter.notifyDataSetChanged()
+        }
+        /*
         val arrayList : ArrayList<Int> = java.util.ArrayList(3)
         arrayList.add(1)
         arrayList.add(2)
@@ -442,6 +484,6 @@ class NestedHomeFragment: Fragment() {
         val prListView : ListView = root.findViewById(R.id.pr_recent_list)
         prListView.adapter = arrayAdapter
 
+         */
     }
-
 }

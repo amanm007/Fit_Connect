@@ -15,6 +15,7 @@ import com.example.fit_connect.PhotoUtil
 import com.example.fit_connect.R
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.user.Following
+import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.user.UserDao
 import com.example.fit_connect.data.user.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +34,7 @@ class FindFollowerActivity : AppCompatActivity() {
     private lateinit var followingsearchedit : EditText
 
     //User Profile
+    private var followerUser : User? = null
     private lateinit var followingImage : ImageView
     private lateinit var followinguserNameText : TextView
     private lateinit var followingNameText : TextView
@@ -100,7 +102,7 @@ class FindFollowerActivity : AppCompatActivity() {
                 //User Found and is not the current user
                 if(user != null){
 
-
+                    followerUser = user
                     if(user.userId == userId){
                         Toast.makeText(this, "SAME USER", Toast.LENGTH_SHORT).show()
                     }
@@ -135,6 +137,7 @@ class FindFollowerActivity : AppCompatActivity() {
                     followingImage.setImageDrawable(null)
                     followbtn.text = getString(R.string.follow)
                     followbtn.visibility = View.GONE
+                    followerUser = null
                 }
 
             })
@@ -149,6 +152,11 @@ class FindFollowerActivity : AppCompatActivity() {
                     if(following != null) {
                         repository.deleteFollowing(following!!)
                         println("DELETED")
+
+                        if(followerUser != null){
+                            followerUser!!.followers--
+                            repository.updateUser(followerUser!!)
+                        }
                     }
                     following = null
                 }
@@ -163,6 +171,13 @@ class FindFollowerActivity : AppCompatActivity() {
                     val insertfollowing = Following(userId = userId, friendId = friendId, friendName = friendName)
                     followingId = repository.insertFollowing(insertfollowing)
                     following = Following(followingId = followingId, userId = userId, friendId = friendId, friendName = friendName)
+
+                    //Update user to check follower count
+                    if(followerUser != null){
+                        followerUser!!.followers++
+                        repository.updateUser(followerUser!!)
+                    }
+
                     println("ADDED")
                 }
                 followbtn.text = getString(R.string.unfollow)
