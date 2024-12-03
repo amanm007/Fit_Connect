@@ -458,12 +458,15 @@ class NestedHomeFragment: Fragment() {
                             exerciselist ->
                         if(exerciselist != null){
                             for(exercise in exerciselist.exercises){
-                                exerciseHistoryList.add(exercise)
-                                atmost3++
                                 if(atmost3 == 3){
                                     break
                                 }
+                                exerciseHistoryList.add(exercise)
+                                atmost3++
+
                             }
+                            arrayAdapter.replace(exerciseHistoryList)
+                            arrayAdapter.notifyDataSetChanged()
                         }
                     }
                     if(atmost3 == 3){
@@ -471,8 +474,7 @@ class NestedHomeFragment: Fragment() {
                     }
                 }
             }
-            arrayAdapter.replace(exerciseHistoryList)
-            arrayAdapter.notifyDataSetChanged()
+
         }
         /*
         val arrayList : ArrayList<Int> = java.util.ArrayList(3)

@@ -138,7 +138,6 @@ class LogExerciseFragment : Fragment() {
                     exerciseTypeId = args.exerciseTypeId
                 )
                 val exerciseId = workoutRepo.insertExercise(exercise)
-
                 setsAdapter.getSets()
                     .map {
                         ExerciseSet(

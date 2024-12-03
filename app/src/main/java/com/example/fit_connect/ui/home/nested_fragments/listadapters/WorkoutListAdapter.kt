@@ -15,7 +15,8 @@ import com.example.fit_connect.data.workout.Exercise
 import com.example.fit_connect.data.workout.WorkoutRepository
 
 class WorkoutListAdapter(private val context: Context, private var arrayList:MutableList<Exercise>) : BaseAdapter(){
-    private var volume = 0
+    var volume = 0
+
     val exerciseImages = listOf(
         R.drawable.bench_press,
         R.drawable.squat,
@@ -55,14 +56,19 @@ class WorkoutListAdapter(private val context: Context, private var arrayList:Mut
                 workoutstring = exercisetoExerciseType.type.displayName
             }
         }
+
+
         val exercisetoSetsLiveData = workoutRepository.getExerciseWithSets(arrayList[position].exerciseId!!)
         var set_count = 0
+        println(arrayList[position].exerciseId!!)
         exercisetoSetsLiveData.observe(context as LifecycleOwner){
             exercisetoSets ->
+            println("Observing Exercise sets")
             if(exercisetoSets != null){
+                println("Getting all the sets")
                 for(sets in exercisetoSets.sets){
-                    volume += sets.volume
                     set_count++
+                    volume += sets.reps + sets.volume
                 }
                 workoutDescriptionTxt.text = set_count.toString() + " sets of " + workoutstring
             }
@@ -72,9 +78,7 @@ class WorkoutListAdapter(private val context: Context, private var arrayList:Mut
     fun replace(newExercises : MutableList<Exercise>){
         arrayList = newExercises
         volume = 0
+    }
 
-    }
-    fun getVolume() : Int{
-        return volume
-    }
+
 }
