@@ -61,7 +61,9 @@ class WorkoutFragment : Fragment(R.layout.workout_front_page) {
 
         view.findViewById<MaterialButton>(R.id.startChestRoutineButton).setOnClickListener {
             try {
-                findNavController().navigate(R.id.action_navigation_profile_to_exercisesFragment)
+                val directions = WorkoutFragmentDirections
+                    .actionNavigationProfileToExercisesFragment(routineType = "Chest")
+                findNavController().navigate(directions)
             } catch (e: Exception) {
                 Log.e("WorkoutFragment", "Navigation failed", e)
                 Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -70,7 +72,9 @@ class WorkoutFragment : Fragment(R.layout.workout_front_page) {
 
         view.findViewById<MaterialButton>(R.id.startShoulderRoutineButton).setOnClickListener {
             try {
-                findNavController().navigate(R.id.action_navigation_profile_to_exercisesFragment)
+                val directions = WorkoutFragmentDirections
+                    .actionNavigationProfileToExercisesFragment(routineType = "Shoulder")
+                findNavController().navigate(directions)
             } catch (e: Exception) {
                 Log.e("WorkoutFragment", "Navigation failed", e)
                 Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -79,14 +83,14 @@ class WorkoutFragment : Fragment(R.layout.workout_front_page) {
 
         view.findViewById<MaterialButton>(R.id.startLegRoutineButton).setOnClickListener {
             try {
-                findNavController().navigate(R.id.action_navigation_profile_to_exercisesFragment)
+                val directions = WorkoutFragmentDirections
+                    .actionNavigationProfileToExercisesFragment(routineType = "Leg")
+                findNavController().navigate(directions)
             } catch (e: Exception) {
                 Log.e("WorkoutFragment", "Navigation failed", e)
                 Toast.makeText(context, "Navigation failed: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 
     private fun startEmptyWorkout() {
