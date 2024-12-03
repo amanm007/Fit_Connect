@@ -49,10 +49,10 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_add"
-                android:tint="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="My Routines (3)"
+        android:text="My Routines (4)"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +170,7 @@
                         android:textColor="#808080" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/startRoutineButton"
+                        android:id="@+id/startChestRoutineButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -213,6 +213,7 @@
                     <com.google.android.material.button.MaterialButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/startShoulderRoutineButton"
                         android:layout_marginTop="8dp"
                         android:backgroundTint="#0066CC"
                         android:text="Start Routine"
@@ -250,6 +251,48 @@
                         android:textColor="#808080" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="#0066CC"
+                        android:id="@+id/startLegRoutineButton"
+                        android:text="Start Routine"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Back Day Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/backDayRoutine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardBackgroundColor="#1A1A1A"
+                app:cardCornerRadius="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BACK DAY"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Dead Lift (Barbell), Pull Ups, Barbell Row, Lat Pulldown, Single Arm Row..."
+                        android:textColor="#808080" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/startBackRoutineButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"

@@ -97,41 +97,18 @@
                     android:textColor="@color/white" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/emptyStateIcon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="100dp"
-                android:src="@drawable/ic_dumbbell"
-                android:visibility="gone"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exercisesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/statsLayout"
-                app:tint="#808080" />
-
-            <TextView
-                android:id="@+id/simpleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:text="Get started\nAdd an exercise to start your workout"
-                android:textAlignment="center"
-                android:textColor="#808080"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emptyStateIcon" />
-
-            <LinearLayout
-                android:layout_width="409dp"
-                android:layout_height="238dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/statsLayout"></LinearLayout>
+                tools:itemCount="3"
+                tools:listitem="@layout/item_exercise" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addExerciseButton"
@@ -145,7 +122,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/simpleText" />
+                app:layout_constraintTop_toBottomOf="@+id/exercisesRecyclerView" />
 
             <LinearLayout
                 android:id="@+id/bottomButtons"

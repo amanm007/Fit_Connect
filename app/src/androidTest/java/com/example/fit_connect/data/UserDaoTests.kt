@@ -1,18 +1,19 @@
 package com.example.fit_connect.data
 
 import android.content.Context
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.example.fit_connect.awaitValue
 import com.example.fit_connect.data.user.UserDao
 import kotlinx.coroutines.runBlocking
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.fit_connect.TestUtil
 import com.example.fit_connect.data.SeedTestData.Companion.insertTestUser
 import com.example.fit_connect.data.SeedTestData.Companion.insertTestUsers
 import com.example.fit_connect.data.SeedTestData.Companion.insertTestWorkouts
 import com.example.fit_connect.data.SeedTestData.Companion.makeTestUser
+import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.workout.WorkoutDao
 import org.junit.After
 import org.junit.Before
@@ -53,7 +54,7 @@ class UserDaoTests {
         val expectedUsers = insertTestUsers(userDao, SeedTestData.testUsers).sortedBy { it.userId }
 
         val users = userDao.getAllUsers().awaitValue().sortedBy { it.userId }
-        assert(users == expectedUsers)
+        assertUsersEqual(users, expectedUsers)
     }
 
     @Test
@@ -62,7 +63,7 @@ class UserDaoTests {
 
         val user = userDao.getUser(expectedUser.userId!!).awaitValue()
         assert(user != null)
-        assert(user == expectedUser)
+        assertUserEqual(user, expectedUser)
     }
 
     @Test
@@ -71,7 +72,7 @@ class UserDaoTests {
 
         val users = userDao.getAllUsers().awaitValue()
         assert(users.size == 1)
-        assert(users.first() == expectedUser)
+        assertUserEqual(users.first(), expectedUser)
     }
 
     @Test
@@ -84,7 +85,7 @@ class UserDaoTests {
         )
 
         val userWithSimpleWorkouts = userDao.getUserWithSimpleWorkouts(userId).awaitValue()
-        assert(userWithSimpleWorkouts.user == expectedUserWithSimpleWorkouts.user)
+        assertUserEqual(userWithSimpleWorkouts.user, expectedUserWithSimpleWorkouts.user)
         assert(userWithSimpleWorkouts.workouts == expectedUserWithSimpleWorkouts.workouts)
     }
 
@@ -95,7 +96,17 @@ class UserDaoTests {
 
         val userWithSimpleWorkouts = userDao.getUserWithSimpleWorkouts(expectedUser.userId!!).awaitValue()
         val workouts = userWithSimpleWorkouts.workouts.sortedBy { it.workoutId }
-        assert(userWithSimpleWorkouts.user == expectedUser)
+        assertUserEqual(userWithSimpleWorkouts.user, expectedUser)
         assert(workouts == expectedWorkouts)
+    }
+
+    private fun assertUsersEqual(u1: List<User?>, u2: List<User?>) {
+        assert(u1.size == u2.size)
+        u1.forEachIndexed { i, u -> assertUserEqual(u, u2[i]) }
+    }
+
+    private fun assertUserEqual(u1: User?, u2: User?) {
+        assert(u1!!.userId == u2!!.userId)
+        assert(u1.userName == u2.userName)
     }
 }

@@ -9,14 +9,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.fit_connect.R
 import com.example.fit_connect.WorkoutRecord
+import com.example.fit_connect.ui.UserActivity
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
+    private val user_id = "USER_ID"
+    private val viewModel: DashboardViewModel by viewModels {
+        val bundle = (activity as? UserActivity)?.sharedBundle
+        val userId = bundle!!.getLong(user_id)
+        DashboardViewModelFactory(requireActivity().application, userId)
+    }
 
-    private val viewModel: DashboardViewModel by viewModels()
     private lateinit var chart: BarChart
     private lateinit var durationButton: Button
     private lateinit var volumeButton: Button

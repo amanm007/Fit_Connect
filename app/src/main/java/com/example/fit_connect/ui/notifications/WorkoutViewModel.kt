@@ -5,14 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.fit_connect.AppDatabase
 import com.example.fit_connect.WorkoutRecord
 import kotlinx.coroutines.launch
 
 class WorkoutViewModel(application: Application) : AndroidViewModel(application) {
-    private val database = AppDatabase.getDatabase(application)
-    private val workoutDao = database.workoutRecordDao()
-
     private val _routines = MutableLiveData<List<WorkoutRecord>>()
     val routines: LiveData<List<WorkoutRecord>> = _routines
 

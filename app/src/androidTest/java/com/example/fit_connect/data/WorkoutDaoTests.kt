@@ -9,7 +9,9 @@ import com.example.fit_connect.TestUtil
 import com.example.fit_connect.awaitValue
 import com.example.fit_connect.data.SeedTestData.Companion.insertExerciseType
 import com.example.fit_connect.data.SeedTestData.Companion.insertExerciseTypes
+import com.example.fit_connect.data.SeedTestData.Companion.insertTestExercise
 import com.example.fit_connect.data.SeedTestData.Companion.insertTestExercises
+import com.example.fit_connect.data.SeedTestData.Companion.insertTestSets
 import com.example.fit_connect.data.SeedTestData.Companion.insertTestUser
 import com.example.fit_connect.data.SeedTestData.Companion.insertTestWorkout
 import com.example.fit_connect.data.user.UserDao
@@ -77,7 +79,6 @@ class WorkoutDaoTests {
     fun testWorkoutWithExercises() = runBlocking {
         val user = insertTestUser(userDao, SeedTestData.testUsers.first())
         val exerciseType = insertExerciseType(workoutDao, SeedTestData.testExerciseTypes.first())
-
         val expectedWorkout = insertTestWorkout(workoutDao, user.userId!!, SeedTestData.testWorkouts.first())
         val expectedExercises = insertTestExercises(
             workoutDao,
@@ -90,5 +91,42 @@ class WorkoutDaoTests {
         val exercises = workoutWithExercises.exercises.sortedBy { it.exerciseId }
         assert(workoutWithExercises.workout == expectedWorkout)
         assert(exercises == expectedExercises)
+    }
+
+    @Test
+    fun testExerciseWithNoSets() = runBlocking {
+        val user = insertTestUser(userDao, SeedTestData.testUsers.first())
+        val expectedExerciseType = insertExerciseType(workoutDao, SeedTestData.testExerciseTypes.first())
+        val workout = insertTestWorkout(workoutDao, user.userId!!, SeedTestData.testWorkouts.first())
+        val expectedExercise = insertTestExercise(
+            workoutDao,
+            workout.workoutId!!,
+            expectedExerciseType.exerciseTypeId!!,
+            SeedTestData.testExercises.first()
+        )
+
+        val exerciseWithSets = workoutDao.getExerciseWithSets(expectedExercise.exerciseId!!).awaitValue()
+        assert(exerciseWithSets.exercise == expectedExercise)
+        assert(exerciseWithSets.exerciseType == expectedExerciseType)
+        assert(exerciseWithSets.sets.isEmpty())
+    }
+
+    @Test
+    fun testExerciseWithSets() = runBlocking {
+        val user = insertTestUser(userDao, SeedTestData.testUsers.first())
+        val expectedExerciseType = insertExerciseType(workoutDao, SeedTestData.testExerciseTypes.first())
+        val workout = insertTestWorkout(workoutDao, user.userId!!, SeedTestData.testWorkouts.first())
+        val expectedExercise = insertTestExercise(
+            workoutDao,
+            workout.workoutId!!,
+            expectedExerciseType.exerciseTypeId!!,
+            SeedTestData.testExercises.first()
+        )
+        val expectedSets = insertTestSets(workoutDao, expectedExercise.exerciseId!!, SeedTestData.testSets).sortedBy { it.setId }
+
+        val exerciseWithSets = workoutDao.getExerciseWithSets(expectedExercise.exerciseId!!).awaitValue()
+        assert(exerciseWithSets.exercise == expectedExercise)
+        assert(exerciseWithSets.exerciseType == expectedExerciseType)
+        assert(exerciseWithSets.sets.sortedBy { it.setId } == expectedSets)
     }
 }
