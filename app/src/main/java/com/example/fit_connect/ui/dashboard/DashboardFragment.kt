@@ -2,12 +2,14 @@ package com.example.fit_connect.ui.dashboard
 
 import android.graphics.Color
 import android.icu.util.Calendar
+import android.media.Image
 import android.os.Bundle
 import android.provider.ContactsContract.Contacts.Photo
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -91,9 +93,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         workoutRepository = WorkoutRepository(workoutDao)
         userRepository = UserRepository(userDao)
 
-        //Preston Setting User Profile
+        //Preston Setting User Profile + Workout
         setProfile(view)
-
         //Preston Setting Observe Duration Data
         getDurationBarData(view)
 
@@ -196,7 +197,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     }
 
     private fun setProfile(view: View){
-
+        //Profile Img and Stats
         val username : TextView = view.findViewById(R.id.username)
         val profileImg : ImageView = view.findViewById(R.id.profile_picture)
         val profileName : TextView = view.findViewById(R.id.profile_name)
@@ -204,23 +205,67 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val followers : TextView = view.findViewById(R.id.follower_counts_txt)
         val following : TextView = view.findViewById(R.id.following_counts_txt)
 
+        //Workout Data and Stats
+        val workoutlayout : LinearLayout = view.findViewById(R.id.dashboard_workouts_layout)
+        val workoutImg : ImageView = view.findViewById(R.id.dashboard_workouts_img)
+        val workoutName : TextView = view.findViewById(R.id.dashboard_workouts_name)
+        val workouttime : TextView = view.findViewById(R.id.dashboard_workout_time_value)
+        val workoutvolume : TextView = view.findViewById(R.id.dashboard_workout_volume_value)
+        val workoutlikes : TextView = view.findViewById(R.id.dashboard_workout_likes)
+        val commentImg : ImageView = view.findViewById(R.id.dashboard_workout_comment_img)
+        val comment : TextView = view.findViewById(R.id.dashboard_workout_comment)
+
         val userLiveData = userRepository.getUser(userId)
         userLiveData.observe(requireContext() as LifecycleOwner){
             user ->
             if(user != null){
                 username.text = user.userName
+                workoutName.text = user.userName
                 profileName.text = user.firstName + " " + user.lastName
+
                 if(user.imageData != null){
                     profileImg.setImageBitmap(PhotoUtil.byteArrayToBitmap(user.imageData!!))
+                    workoutImg.setImageBitmap(PhotoUtil.byteArrayToBitmap(user.imageData!!))
                 }
+                else{
+                    profileImg.setImageResource(R.drawable.ic_launcher_background)
+                    workoutImg.setImageResource(R.drawable.ic_launcher_background)
+                }
+
                 followers.text = "Followers: " + user.followers.toString()
             }
         }
+
         val userWorkoutLiveData = userRepository.getUserWithSimpleWorkouts(userId)
         userWorkoutLiveData.observe(requireContext() as LifecycleOwner){
             userWorkout->
             if(userWorkout != null){
                 workoutcount.text = "Workouts: " + userWorkout.workouts.size.toString()
+                if(userWorkout.workouts.isNotEmpty()){
+                    workoutlayout.visibility = View.VISIBLE
+
+                    //Get Last Workout
+                    val workout = userWorkout.workouts[userWorkout.workouts.size-1]
+
+                    //Duration and Likes
+                    workouttime.text = (workout.duration.toFloat()/60).toString() + " hrs"
+                    workoutlikes.text = workout.likes.toString() + " likes"
+
+                    //Last Comment
+                    if(workout.comments.isNotEmpty()){
+                        val getComment = workout.comments[workout.comments.size-1]
+                        if(getComment.imageData.size == 0){
+                            commentImg.setImageResource(R.drawable.ic_launcher_background)
+                        }
+                        else{
+                            commentImg.setImageBitmap(PhotoUtil.byteArrayToBitmap(getComment.imageData))
+                        }
+                        comment.text = getComment.comment
+                    }
+                }
+                else{
+                    workoutlayout.visibility = View.GONE
+                }
             }
         }
 

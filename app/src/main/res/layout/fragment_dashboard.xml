@@ -48,226 +48,361 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_settings"
-                android:tint="@color/white"
+                app:tint="@color/white"
                 android:layout_weight="1"
                 android:layout_alignParentEnd="true" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
 
 
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:paddingBottom="?attr/actionBarSize">
 
-        <!-- Profile Info -->
-        <LinearLayout
-            android:id="@+id/profile_info_layout"
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/profile_picture"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_launcher_background"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/circle_background"
-                android:scaleType="centerCrop" />
+            <!-- Profile Info -->
+            <LinearLayout
+                android:id="@+id/profile_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_launcher_background"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/circle_background"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aman"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="4dp">
+
+                        <TextView
+                            android:id="@+id/workout_counts_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Workouts: 39"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/follower_counts_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Followers: 0"
+                            android:layout_marginStart="16dp"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/following_counts_txt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Following: 0"
+                            android:layout_marginStart="16dp"
+                            android:textColor="@color/gray"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Weekly Chart -->
+            <TextView
+                android:id="@+id/stats_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="5 hours this week"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:layout_below="@id/profile_info_layout" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/stats_title"
+                android:layout_marginTop="8dp"
+                android:background="@color/dark_gray" />
+
+            <!-- Duration, Volume, Reps Buttons -->
+            <LinearLayout
+                android:id="@+id/chart_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/chart"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="3">
+
+                <Button
+                    android:id="@+id/durationButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/blue"
+                    android:text="Duration"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/volumeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/gray"
+                    android:text="Volume"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/repsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/gray"
+                    android:text="Reps"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <!-- Dashboard Header -->
+            <TextView
+                android:id="@+id/dashboard_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Dashboard"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:layout_below="@id/chart_buttons" />
+
+            <!-- Dashboard Buttons -->
+            <GridLayout
+                android:id="@+id/dashboard_buttons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_below="@id/dashboard_header"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <Button
+                    android:id="@+id/statisticsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Statistics"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/blue"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/exercisesButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Exercises"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/blue"
+                    android:textColor="@color/white" />
+
+
+                <Button
+                    android:id="@+id/measuresButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Measures"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/blue"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/calendarButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Calendar"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:backgroundTint="@color/blue"
+                    android:textColor="@color/white" />
+            </GridLayout>
+
+            <!-- Workouts Section -->
+            <TextView
+                android:id="@+id/workouts_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Workouts"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:layout_below="@id/dashboard_buttons" />
 
             <LinearLayout
+                android:id="@+id/dashboard_workouts_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:layout_below="@id/workouts_header"
+                android:layout_marginTop="12dp">
 
-                <TextView
-                    android:id="@+id/profile_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Aman"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingTop="4dp">
+                    <ImageView
+                        android:id="@+id/dashboard_workouts_img"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
 
                     <TextView
-                        android:id="@+id/workout_counts_txt"
+                        android:id="@+id/dashboard_workouts_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Workouts: 39"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_toRightOf="@id/dashboard_workouts_img"
+                        />
 
                     <TextView
-                        android:id="@+id/follower_counts_txt"
+                        android:id="@+id/dashboard_latest_workout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Followers: 0"
-                        android:layout_marginStart="16dp"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
+                        android:text="Latest Workout"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_below="@id/dashboard_workouts_img"
+                        android:layout_marginTop="8dp"/>
 
                     <TextView
-                        android:id="@+id/following_counts_txt"
+                        android:id="@+id/dashboard_workout_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Following: 0"
-                        android:layout_marginStart="16dp"
-                        android:textColor="@color/gray"
-                        android:textSize="12sp" />
-                </LinearLayout>
+                        android:text="Time"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:layout_below="@id/dashboard_latest_workout"
+                        android:layout_marginTop="12dp"/>
+
+                    <TextView
+                        android:id="@+id/dashboard_workout_volume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Volume"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:layout_below="@id/dashboard_latest_workout"
+                        android:layout_toRightOf="@id/dashboard_workout_time"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="24dp"/>
+
+                    <TextView
+                        android:id="@+id/dashboard_workout_time_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:layout_below="@id/dashboard_workout_time"
+                        android:layout_marginTop="6dp"/>
+
+                    <TextView
+                        android:id="@+id/dashboard_workout_volume_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:layout_below="@id/dashboard_workout_time"
+                        android:layout_marginTop="6dp"/>
+
+                    <View
+                        android:id="@+id/dashboard_line_seperator"
+                        android:layout_below="@id/dashboard_workout_volume_value"
+                        android:layout_marginTop="24dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:paddingTop="20dp"
+                        android:background="@color/white"
+                        android:layout_margin="8dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/dashboard_workout_comment_img"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_below="@+id/dashboard_line_seperator"
+                        android:layout_marginTop="24dp" />
+
+                    <TextView
+                        android:id="@+id/dashboard_workout_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dashboard_line_seperator"
+                        android:layout_marginTop="24dp"
+                        android:layout_toRightOf="@id/dashboard_workout_comment_img"
+                        android:layout_marginLeft="12dp"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"/>
+
+                    <TextView
+                        android:id="@+id/dashboard_workout_likes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#00CED1"
+                        android:textSize="12sp"
+                        android:layout_below="@id/dashboard_line_seperator"
+                        android:layout_marginTop="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        />
+
+
+                </RelativeLayout>
+
             </LinearLayout>
-        </LinearLayout>
 
-        <!-- Weekly Chart -->
-        <TextView
-            android:id="@+id/stats_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="5 hours this week"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_below="@id/profile_info_layout" />
+        </RelativeLayout>
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@id/stats_title"
-            android:layout_marginTop="8dp"
-            android:background="@color/dark_gray" />
+    </ScrollView>
 
-        <!-- Duration, Volume, Reps Buttons -->
-        <LinearLayout
-            android:id="@+id/chart_buttons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/chart"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="3">
-
-            <Button
-                android:id="@+id/durationButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/blue"
-                android:text="Duration"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/volumeButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/gray"
-                android:text="Volume"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/repsButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:backgroundTint="@color/gray"
-                android:text="Reps"
-                android:textColor="@color/white" />
-        </LinearLayout>
-
-        <!-- Dashboard Header -->
-        <TextView
-            android:id="@+id/dashboard_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Dashboard"
-            android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:layout_below="@id/chart_buttons" />
-
-        <!-- Dashboard Buttons -->
-        <GridLayout
-            android:id="@+id/dashboard_buttons"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_below="@id/dashboard_header"
-            android:columnCount="2"
-            android:rowCount="2"
-            android:orientation="horizontal"
-            android:padding="8dp">
-
-            <Button
-                android:id="@+id/statisticsButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Statistics"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/blue"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/exercisesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Exercises"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/blue"
-                android:textColor="@color/white" />
-
-
-            <Button
-                android:id="@+id/measuresButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Measures"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/blue"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/calendarButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Calendar"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/blue"
-                android:textColor="@color/white" />
-        </GridLayout>
-
-        <!-- Workouts Section -->
-        <TextView
-            android:id="@+id/workouts_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Workouts"
-            android:textColor="@color/blue"
-            android:textStyle="bold"
-            android:layout_below="@id/dashboard_buttons" />
-
-    </RelativeLayout>
 
 </LinearLayout>
