@@ -16,8 +16,17 @@ class SeedTestData {
             = users.map { insertTestUser(userDao, it) }
         suspend fun insertTestUser(userDao: UserDao, user: User)
             = makeTestUser(userDao.insertUser(user))
-        fun makeTestUser(id: Long? = null): User
-            = User("testFirst", "testLast", "testEmail", id)
+        fun makeTestUser(id: Long? = null)
+            = User(
+                "testFirst",
+                "testLast",
+                "testUser-$id",
+                "testEmail",
+                "pass",
+                0,
+                ByteArray(0),
+                id
+            )
         val testUsers = listOf(
             makeTestUser(1),
             makeTestUser(2),
