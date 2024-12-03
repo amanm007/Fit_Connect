@@ -19,6 +19,7 @@ import com.example.fit_connect.R
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.user.Following
 import com.example.fit_connect.data.user.UserRepository
+import com.example.fit_connect.data.workout.Exercise
 import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutRepository
 import com.example.fit_connect.ui.home.nested_fragments.following_activities.CreateCommentActivity
@@ -74,14 +75,14 @@ class FollowingListAdapter(private val context: Context, private var followingLi
         val workoutLayout = customView.findViewById<LinearLayout>(R.id.following_workout_data_layout)
 
         //Get Workout Data including likes and comments
-        val followingWorkout = repository.getUserWithSimpleWorkouts(followingList[position].friendId)
+
         val followWorkoutDayTxt : TextView = customView.findViewById(R.id.workout_day_txt)
         val followTimeTxt : TextView = customView.findViewById(R.id.following_time_txt)
         val followVolumeTxt : TextView = customView.findViewById(R.id.following_volume_txt)
         val followWorkoutList : ListView = customView.findViewById(R.id.following_workout_listview)
 
         val followNumberLikesTxt :TextView = customView.findViewById(R.id.number_likes_txt)
-        val followNumberCommentTxt:TextView = customView.findViewById(R.id.number_comments_txt)
+        val followNumberCommentTxt :TextView = customView.findViewById(R.id.number_comments_txt)
 
         //Setup Img button (For Later)
         val followLikebtn : ImageButton = customView.findViewById(R.id.like_imgbtn)
@@ -91,7 +92,11 @@ class FollowingListAdapter(private val context: Context, private var followingLi
         val followLastCommentImg : ImageView = customView.findViewById(R.id.following_comment_img)
         val followCommentTxt : TextView = customView.findViewById(R.id.following_comment_txt)
 
+        val arrayAdapter = WorkoutListAdapter(context, mutableListOf())
+        followWorkoutList.adapter = arrayAdapter
+
         //Get Workout list from Dao
+        val followingWorkout = repository.getUserWithSimpleWorkouts(followingList[position].friendId)
         followingWorkout.observe(context as LifecycleOwner) { simpleWorkouts ->
             val workoutList = simpleWorkouts.workouts
 
@@ -101,9 +106,10 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                 workoutLayout.visibility = View.VISIBLE
 
                 //Get Most Recent Workout
+                var volume = 0
                 val workout = workoutList[workoutList.size - 1]
+
                 followTimeTxt.text = (workout.duration.toDouble() / 60).toString() + " hrs"
-                followVolumeTxt.text = "0 lbs"
                 followNumberLikesTxt.text = workout.likes.toString()  + " likes"
                 followNumberCommentTxt.text = workout.comments.size.toString() + " comments"
 
@@ -113,7 +119,7 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                 setupCommentBtn(followCommentbtn, context, workout.workoutId!!)
 
                 //Set Last Comment Made
-                val commentList = workoutList[workoutList.size-1].comments
+                val commentList = workout.comments
                 if(commentList.isNotEmpty()) {
 
                     val lastComment = commentList[commentList.size-1]
@@ -128,26 +134,42 @@ class FollowingListAdapter(private val context: Context, private var followingLi
                         followLastCommentImg.setImageResource(R.drawable.ic_launcher_background)
                     }
                 }
+                //Get all of the Exercises + Volume Quantity for Workout
+                val exerciseList : MutableList<Exercise> = mutableListOf()
+                val exercisesLiveData = workoutRepository.getWorkoutWithExercises(workout.workoutId)
+                exercisesLiveData.observe(context as LifecycleOwner){
+                    workoutwihtexercises->
+                    if(workoutwihtexercises != null){
+                        val exerciselist = workoutwihtexercises.exercises
+                        for(exercise in exerciselist){
+                            exerciseList.add(exercise)
+                        }
+                    }
+
+                    //Set Size of List View Layout with new items
+                    followWorkoutList.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        (80 * exerciseList.size * context.resources.displayMetrics.density).toInt()
+                    )
+                    arrayAdapter.replace(exerciseList)
+                    arrayAdapter.notifyDataSetChanged()
+                    followVolumeTxt.text = arrayAdapter.getVolume().toString() + " lbs"
+                }
+
             }
             else{
                 println("Bye")
             }
-
         }
 
-        //Set Following Workout List (Use another list adapter)
 
-        val arrayList : ArrayList<Int> = java.util.ArrayList(3)
-        arrayList.add(1)
-        arrayList.add(2)
-        arrayList.add(3)
+        /*
 
-        val arrayAdapter = WorkoutListAdapter(context, arrayList)
-        followWorkoutList.adapter = arrayAdapter
         followWorkoutList.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             (80 * arrayList.size * context.resources.displayMetrics.density).toInt()
         )
+        */
 
         return customView
         }
