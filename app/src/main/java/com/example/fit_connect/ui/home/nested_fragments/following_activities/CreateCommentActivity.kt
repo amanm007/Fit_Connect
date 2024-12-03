@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.ContactsContract.Contacts.Photo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -34,18 +36,21 @@ class CreateCommentActivity: AppCompatActivity() {
     private lateinit var commentTxt : EditText
     private lateinit var commentListView : ListView
     private lateinit var followingCommentProfile : TextView
+    private lateinit var followingCommentImage : ImageView
     private var isNewComment = false
     private lateinit var commentList : MutableList<Comments>
 
     //Intent
     private val workout_id_string = "WORKOUT_ID"
     private val user_id_string = "USER_ID"
+    private val follower_id_string = "FOLLOWER_ID"
+
     private var workoutId : Long = 0
     private var workoutData : Workout? = null
     private var userId : Long = 0
     private var username : String = ""
     private var imageData : ByteArray = ByteArray(0)
-
+    private var followerId : Long = 0
     //Repository
     private lateinit var database : FitConnectDatabase
     private lateinit var userDatabaseDao : UserDao
@@ -66,6 +71,7 @@ class CreateCommentActivity: AppCompatActivity() {
         commentTxt = findViewById(R.id.post_comment_edit)
         commentListView = findViewById(R.id.comment_listview)
         followingCommentProfile = findViewById(R.id.comment_following_name_txt)
+        followingCommentImage = findViewById(R.id.comment_following_img)
 
         //Repository
         database = FitConnectDatabase.getInstance(this)
@@ -76,6 +82,7 @@ class CreateCommentActivity: AppCompatActivity() {
 
         workoutId = intent.getLongExtra(workout_id_string, 0)
         userId = intent.getLongExtra(user_id_string, 0)
+        followerId = intent.getLongExtra(follower_id_string, 0)
 
         commentList = mutableListOf()
         setBackBtn()
@@ -83,6 +90,7 @@ class CreateCommentActivity: AppCompatActivity() {
         initalizeList()
         setCommentList()
         observeUser()
+        observeFollower()
 
     }
     private fun observeUser(){
@@ -95,6 +103,19 @@ class CreateCommentActivity: AppCompatActivity() {
 
                 if(user.imageData != null){
                     imageData = user.imageData!!
+                }
+            }
+        }
+    }
+
+    private fun observeFollower(){
+        val followerLiveData = userRepository.getUser(followerId)
+        followerLiveData.observe(this as LifecycleOwner){
+            user ->
+            if(user != null){
+                followingCommentProfile.text = user.firstName + " " + user.lastName
+                if(user.imageData != null){
+                    followingCommentImage.setImageBitmap(PhotoUtil.byteArrayToBitmap(user.imageData!!))
                 }
             }
         }

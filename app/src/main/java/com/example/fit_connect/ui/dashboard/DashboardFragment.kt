@@ -14,6 +14,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.anychart.core.gauge.pointers.Bar
 import com.example.fit_connect.PhotoUtil
@@ -22,8 +24,11 @@ import com.example.fit_connect.WorkoutRecord
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.user.UserDao
 import com.example.fit_connect.data.user.UserRepository
+import com.example.fit_connect.data.workout.ExerciseWithSets
+import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutDao
 import com.example.fit_connect.data.workout.WorkoutRepository
+import com.example.fit_connect.helperMapWorkoutRecords
 import com.example.fit_connect.ui.UserActivity
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
@@ -75,6 +80,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         "Friday",
         "Saturday"
     )
+    private lateinit var recordslive : LiveData<Map<Workout, List<ExerciseWithSets>>>
+    private lateinit var volumeTxt : TextView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -88,6 +96,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         repsButton = view.findViewById(R.id.repsButton)
         exercisesButton = view.findViewById(R.id.exercisesButton)
         calendarButton=view.findViewById(R.id.calendarButton)
+        volumeTxt = view.findViewById(R.id.dashboard_workout_volume_value)
 
         //Initialize Repository
         database = FitConnectDatabase.getInstance(requireContext())
@@ -138,23 +147,23 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val entries = ArrayList<BarEntry>()
 
         // Populate chart entries
+        /*
         if(metric == "duration"){
             for(i in 0 .. 6){
                 entries.add(BarEntry(i.toFloat(), durationStats[i].toFloat()/60))
             }
         }
-
-        else {
-            records.forEachIndexed { index, record ->
+        */
+        records.forEachIndexed { index, record ->
                 val value = when (metric) {
                     "duration" -> record.duration.toFloat()
                     "volume" -> record.volume.toFloat()
                     "reps" -> record.reps.toFloat()
                     else -> 0f
                 }
-                entries.add(BarEntry(index.toFloat(), value))
-            }
+            entries.add(BarEntry(index.toFloat(), value))
         }
+
 
         // Set up BarDataSet and customize appearance
         val dataSet = BarDataSet(entries, metric.capitalize())
@@ -165,7 +174,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         //Set up X Axis Weekday Labels
         val weekdayOrder : MutableList<String> = mutableListOf()
         for(i in 0 .. 6){
-            weekdayOrder.add(weekdays[(start_dayofWeekIndex + i) % 7])
+            weekdayOrder.add(weekdays[(start_dayofWeekIndex-1 + i) % 7])
         }
         val xAxis : XAxis = chart.xAxis
         xAxis.valueFormatter = IndexAxisValueFormatter(weekdayOrder)
@@ -174,12 +183,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         xAxis.labelCount = 7
         xAxis.textColor = Color.WHITE
 
-        //Setup yaxis
-        val yAxis : YAxis = chart.axisLeft
-        yAxis.axisMaximum = 100f
-        yAxis.axisMinimum = 0f
-        yAxis.valueFormatter = IndexAxisValueFormatter(arrayOf("5hrs", "10hrs", "15hrs", "20hrs", "25hrs"))
-        yAxis.setLabelCount(5, true)
 
         val yAxisRight : YAxis = chart.axisRight
         yAxisRight.isEnabled = false
@@ -265,6 +268,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                         }
                         comment.text = getComment.comment
                     }
+                    recordslive = workoutRepository.getWorkoutWithExercisesAndSets(listOf(workout.workoutId!!))
+
                 }
                 else{
                     workoutlayout.visibility = View.GONE
@@ -280,7 +285,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
         }
     }
-
 
     private fun getDurationBarData(view : View){
         val userWorkoutLiveData = userRepository.getUserWithSimpleWorkouts(userId)
@@ -325,7 +329,21 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     override fun onResume() {
         super.onResume()
-        updateChart(viewModel.weeklyRecords.value ?: listOf(), "duration")
-        toggleButtonColors(durationButton)
+        println("Resume")
+        recordslive.observe(viewLifecycleOwner) { records ->
+            recordslive.removeObservers(viewLifecycleOwner)
+            if (records != null) {
+                val workoutrecord = helperMapWorkoutRecords(records)
+                if (workoutrecord.isNotEmpty()) {
+                    volumeTxt.text =workoutrecord[0].volume.toString() + "lbs"
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        println("Destroy")
+        recordslive.removeObservers(viewLifecycleOwner)
     }
 }
