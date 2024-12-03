@@ -348,7 +348,7 @@
                         android:id="@+id/dashboard_workout_volume_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="0 lbs"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:layout_below="@id/dashboard_workout_time"

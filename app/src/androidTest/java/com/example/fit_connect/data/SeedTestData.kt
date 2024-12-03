@@ -26,8 +26,7 @@ class SeedTestData {
                 "pass",
                 0,
                 ByteArray(0),
-                5,
-                id
+                userId = id
             )
         val testUsers = listOf(
             makeTestUser(1),
@@ -43,16 +42,7 @@ class SeedTestData {
             return makeTestWorkout(userId, wId)
         }
         fun makeTestWorkout(userId: Long, id: Long? = null): Workout
-            = Workout(
-                Date(Long.MIN_VALUE).time,
-                    1,
-                    true,
-                    2,
-                    mutableListOf(),
-                    mutableListOf(),
-                    id,
-                    userId
-                )
+            = Workout(Date(Long.MIN_VALUE).time, 1, true, workoutId =  id, userId =  userId)
         val testWorkouts = listOf(
             makeTestWorkout(testUsers.first().userId!!, 1),
             makeTestWorkout(testUsers.first().userId!!, 2)

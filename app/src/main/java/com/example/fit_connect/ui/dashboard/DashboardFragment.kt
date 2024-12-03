@@ -53,6 +53,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var repsButton: Button
     private lateinit var exercisesButton: Button
     private lateinit var calendarButton: Button
+    private lateinit var measuresButton: Button
 
     private var userId : Long = 0
 
@@ -80,7 +81,9 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         "Friday",
         "Saturday"
     )
-    private lateinit var recordslive : LiveData<Map<Workout, List<ExerciseWithSets>>>
+    private var recordslive : LiveData<Map<Workout, List<ExerciseWithSets>>>? = null
+    private var workoutslive : LiveData<Map<Workout, List<ExerciseWithSets>>>? =null
+
     private lateinit var volumeTxt : TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -97,6 +100,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         exercisesButton = view.findViewById(R.id.exercisesButton)
         calendarButton=view.findViewById(R.id.calendarButton)
         volumeTxt = view.findViewById(R.id.dashboard_workout_volume_value)
+        measuresButton=view.findViewById(R.id.measuresButton)
+
 
         //Initialize Repository
         database = FitConnectDatabase.getInstance(requireContext())
@@ -119,8 +124,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             findNavController().navigate(R.id.action_dashboardFragment_to_calendarFragment)
         }
 
-
-
         // Set click listeners for buttons to update chart
         durationButton.setOnClickListener {
             updateChart(viewModel.weeklyRecords.value ?: listOf(), "duration")
@@ -136,6 +139,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             updateChart(viewModel.weeklyRecords.value ?: listOf(), "reps")
             toggleButtonColors(repsButton)
         }
+        measuresButton.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_measurementFragment)
+        }
+
 
         // Observe weekly records from ViewModel
         viewModel.weeklyRecords.observe(viewLifecycleOwner) { records ->
@@ -147,23 +154,34 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val entries = ArrayList<BarEntry>()
 
         // Populate chart entries
-        /*
+
         if(metric == "duration"){
             for(i in 0 .. 6){
                 entries.add(BarEntry(i.toFloat(), durationStats[i].toFloat()/60))
             }
         }
-        */
-        records.forEachIndexed { index, record ->
+        else if(metric == "volume"){
+            for(i in 0 .. 6){
+                entries.add(BarEntry(i.toFloat(), volumeStats[i].toFloat()))
+            }
+        }
+        else if (metric == "reps"){
+            for(i in 0 .. 6){
+                entries.add(BarEntry(i.toFloat(), repsStats[i].toFloat()))
+            }
+        }
+
+        else {
+            records.forEachIndexed { index, record ->
                 val value = when (metric) {
                     "duration" -> record.duration.toFloat()
                     "volume" -> record.volume.toFloat()
                     "reps" -> record.reps.toFloat()
                     else -> 0f
                 }
-            entries.add(BarEntry(index.toFloat(), value))
+                entries.add(BarEntry(index.toFloat(), value))
+            }
         }
-
 
         // Set up BarDataSet and customize appearance
         val dataSet = BarDataSet(entries, metric.capitalize())
@@ -257,6 +275,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     workouttime.text = (workout.duration.toFloat()/60).toString() + " hrs"
                     workoutlikes.text = workout.likes.toString() + " likes"
 
+                    val workoutIdList : MutableList<Long> = mutableListOf()
                     //Last Comment
                     if(workout.comments.isNotEmpty()){
                         val getComment = workout.comments[workout.comments.size-1]
@@ -267,9 +286,15 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                             commentImg.setImageBitmap(PhotoUtil.byteArrayToBitmap(getComment.imageData))
                         }
                         comment.text = getComment.comment
-                    }
-                    recordslive = workoutRepository.getWorkoutWithExercisesAndSets(listOf(workout.workoutId!!))
 
+                    }
+                    //Get All workout ids
+                    for(workouts in userWorkout.workouts){
+                        workoutIdList.add(workouts.workoutId!!)
+                    }
+
+                    recordslive = workoutRepository.getWorkoutWithExercisesAndSets(listOf(workout.workoutId!!))
+                    workoutslive = workoutRepository.getWorkoutWithExercisesAndSets(workoutIdList)
                 }
                 else{
                     workoutlayout.visibility = View.GONE
@@ -330,12 +355,46 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     override fun onResume() {
         super.onResume()
         println("Resume")
-        recordslive.observe(viewLifecycleOwner) { records ->
-            recordslive.removeObservers(viewLifecycleOwner)
-            if (records != null) {
-                val workoutrecord = helperMapWorkoutRecords(records)
-                if (workoutrecord.isNotEmpty()) {
-                    volumeTxt.text =workoutrecord[0].volume.toString() + "lbs"
+        if(recordslive != null) {
+            recordslive?.observe(viewLifecycleOwner) { records ->
+                recordslive?.removeObservers(viewLifecycleOwner)
+                if (records != null) {
+                    val workoutrecord = helperMapWorkoutRecords(records)
+                    if (workoutrecord.isNotEmpty()) {
+                        volumeTxt.text = workoutrecord[0].volume.toString() + "lbs"
+                    }
+                }
+            }
+        }
+        if(workoutslive != null){
+            workoutslive?.observe(viewLifecycleOwner){
+                workoutRecords ->
+                workoutslive?.removeObservers(viewLifecycleOwner)
+
+                for(i in 0 .. 6){
+                    volumeStats[i] = 0
+                    repsStats[i] = 0
+                }
+
+                if(workoutRecords != null){
+                    val workoutRecordList = helperMapWorkoutRecords(workoutRecords)
+
+                    val startdate = getCalendarInstance()
+                    val enddate = getCalendarInstance()
+                    enddate.add(Calendar.DAY_OF_MONTH, 1)
+
+
+                    for(i in 0 .. 6){
+                        for(records in workoutRecordList){
+                            if(records.date in startdate.timeInMillis .. enddate.timeInMillis){
+                                volumeStats[6-i] += records.volume
+                                repsStats[6-i] += records.reps
+                            }
+                        }
+                        startdate.add(Calendar.DAY_OF_MONTH, -1)
+                        enddate.add(Calendar.DAY_OF_MONTH, -1)
+                    }
+                    updateChart(listOf(), "duration")
                 }
             }
         }
@@ -344,6 +403,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     override fun onDestroyView() {
         super.onDestroyView()
         println("Destroy")
-        recordslive.removeObservers(viewLifecycleOwner)
+        if(recordslive != null) {
+            recordslive?.removeObservers(viewLifecycleOwner)
+        }
+        if(workoutslive != null){
+            workoutslive?.removeObservers(viewLifecycleOwner)
+        }
     }
 }
