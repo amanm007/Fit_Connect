@@ -43,11 +43,13 @@ class EmptyWorkoutFragment : Fragment(R.layout.empty_workout_page) {
         val exerciseCategory = arguments?.getString("exerciseCategory")
 
         userRepo.getUserWithSimpleWorkouts(userId).observe(viewLifecycleOwner) {
+            println("GET USER WITH SIMPLE WORKOUTS")
+            println(it)
             view.findViewById<RecyclerView>(R.id.exercisesRecyclerView).apply {
-                val workoutHistories = it.workouts.map {
+                val workoutHistories = it.workouts.map { w ->
                     WorkoutHistory(
-                        time = Date(it.timestamp),
-                        duration = it.duration.toLong()
+                        time = Date(w.timestamp),
+                        duration = w.duration.toLong()
                     )
                 }
                 adapter = WorkoutHistoryAdapter(workoutHistories)
