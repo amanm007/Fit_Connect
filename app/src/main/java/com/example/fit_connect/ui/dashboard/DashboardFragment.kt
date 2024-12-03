@@ -80,7 +80,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         "Friday",
         "Saturday"
     )
-    private lateinit var recordslive : LiveData<Map<Workout, List<ExerciseWithSets>>>
+    private var recordslive : LiveData<Map<Workout, List<ExerciseWithSets>>>? = null
     private lateinit var volumeTxt : TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,8 +119,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             findNavController().navigate(R.id.action_dashboardFragment_to_calendarFragment)
         }
 
-
-
         // Set click listeners for buttons to update chart
         durationButton.setOnClickListener {
             updateChart(viewModel.weeklyRecords.value ?: listOf(), "duration")
@@ -147,23 +145,23 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         val entries = ArrayList<BarEntry>()
 
         // Populate chart entries
-        /*
+
         if(metric == "duration"){
             for(i in 0 .. 6){
                 entries.add(BarEntry(i.toFloat(), durationStats[i].toFloat()/60))
             }
         }
-        */
-        records.forEachIndexed { index, record ->
+        else {
+            records.forEachIndexed { index, record ->
                 val value = when (metric) {
                     "duration" -> record.duration.toFloat()
                     "volume" -> record.volume.toFloat()
                     "reps" -> record.reps.toFloat()
                     else -> 0f
                 }
-            entries.add(BarEntry(index.toFloat(), value))
+                entries.add(BarEntry(index.toFloat(), value))
+            }
         }
-
 
         // Set up BarDataSet and customize appearance
         val dataSet = BarDataSet(entries, metric.capitalize())
@@ -318,6 +316,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
     }
 
+
     private fun getCalendarInstance() : Calendar {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, 0)
@@ -330,12 +329,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     override fun onResume() {
         super.onResume()
         println("Resume")
-        recordslive.observe(viewLifecycleOwner) { records ->
-            recordslive.removeObservers(viewLifecycleOwner)
-            if (records != null) {
-                val workoutrecord = helperMapWorkoutRecords(records)
-                if (workoutrecord.isNotEmpty()) {
-                    volumeTxt.text =workoutrecord[0].volume.toString() + "lbs"
+        if(recordslive != null) {
+            recordslive?.observe(viewLifecycleOwner) { records ->
+                recordslive?.removeObservers(viewLifecycleOwner)
+                if (records != null) {
+                    val workoutrecord = helperMapWorkoutRecords(records)
+                    if (workoutrecord.isNotEmpty()) {
+                        volumeTxt.text = workoutrecord[0].volume.toString() + "lbs"
+                    }
                 }
             }
         }
@@ -344,6 +345,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     override fun onDestroyView() {
         super.onDestroyView()
         println("Destroy")
-        recordslive.removeObservers(viewLifecycleOwner)
+        if(recordslive != null) {
+            recordslive?.removeObservers(viewLifecycleOwner)
+        }
     }
 }
