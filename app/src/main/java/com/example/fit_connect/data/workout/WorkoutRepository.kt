@@ -2,8 +2,10 @@ package com.example.fit_connect.data.workout
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.map
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 import java.util.Date
 
 class WorkoutRepository(private val workoutDao: WorkoutDao) {
@@ -97,4 +99,9 @@ class WorkoutRepository(private val workoutDao: WorkoutDao) {
 
     fun getUserWorkoutsInDateRange(userId: Long, startDate: Date, endDate: Date)
         = workoutDao.getUserWorkoutsInDateRange(userId, startDate.time, endDate.time)
+
+    fun getUserWorkoutDays(userId: Long)
+        = workoutDao.getUserWorkoutDays(userId).map { workoutDays ->
+            workoutDays.map { LocalDate.parse(it) }
+        }
 }

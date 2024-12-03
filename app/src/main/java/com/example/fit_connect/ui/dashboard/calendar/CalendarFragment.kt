@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.fit_connect.R
+import com.example.fit_connect.data.FitConnectDatabase
+import com.example.fit_connect.data.workout.WorkoutRepository
 import com.example.fit_connect.databinding.FragmentCalendarBinding
+import com.example.fit_connect.ui.UserActivity
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -13,6 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class CalendarFragment : Fragment(R.layout.fragment_calendar) {
+    private val user_id = "USER_ID"
 
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
@@ -21,6 +25,12 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentCalendarBinding.bind(view)
+
+        val db = FitConnectDatabase.getInstance(requireContext())
+        val workoutRepo = WorkoutRepository(db.workoutDao())
+
+        val bundle = (activity as? UserActivity)?.sharedBundle
+        val userId = bundle!!.getLong(user_id)
 
         val calendarView = binding.calendarView
         calendarView.selectionMode = MaterialCalendarView.SELECTION_MODE_SINGLE
@@ -37,21 +47,27 @@ class CalendarFragment : Fragment(R.layout.fragment_calendar) {
             updateMonthLabel(date)
         }
 
-        // Highlight example dates
-        val highlightedDates = listOf(
-            CalendarDay.from(2024, 10, 3),
-            CalendarDay.from(2024, 10, 8),
-            CalendarDay.from(2024, 10, 14),
-            CalendarDay.from(2024, 10, 17),
-            CalendarDay.from(2024, 10, 21),
-            CalendarDay.from(2024, 10, 23),
-            CalendarDay.from(2024, 11, 4),
-            CalendarDay.from(2024, 11, 6),
-            CalendarDay.from(2024, 11, 9)
-        )
-        highlightedDates.forEach { date ->
-            calendarView.setDateSelected(date, true)
+        workoutRepo.getUserWorkoutDays(userId).observe(viewLifecycleOwner) { workoutDays ->
+            workoutDays
+                .map { CalendarDay.from(it.year, it.monthValue, it.dayOfMonth) }
+                .forEach { calendarView.setDateSelected(it, true) }
         }
+
+        // Highlight example dates
+//        val highlightedDates = listOf(
+//            CalendarDay.from(2024, 10, 3),
+//            CalendarDay.from(2024, 10, 8),
+//            CalendarDay.from(2024, 10, 14),
+//            CalendarDay.from(2024, 10, 17),
+//            CalendarDay.from(2024, 10, 21),
+//            CalendarDay.from(2024, 10, 23),
+//            CalendarDay.from(2024, 11, 4),
+//            CalendarDay.from(2024, 11, 6),
+//            CalendarDay.from(2024, 11, 9)
+//        )
+//        highlightedDates.forEach { date ->
+//            calendarView.setDateSelected(date, true)
+//        }
 
         // Update streak and rest buttons
         binding.streakButton.text = "3 weeks Streak"

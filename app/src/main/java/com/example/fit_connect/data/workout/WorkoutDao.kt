@@ -44,4 +44,11 @@ interface WorkoutDao {
     @Transaction
     @Query("SELECT * FROM $EXERCISE_TABLE_NAME WHERE $EXERCISE_ID_NAME = :exerciseId")
     fun getExerciseWithSets(exerciseId: Long): LiveData<ExerciseWithSets>
+
+    @Query("""
+        SELECT DISTINCT DATE(datetime(timestamp / 1000, 'unixepoch')) as WorkoutDay
+        FROM $WORKOUT_TABLE_NAME
+        WHERE user_id = :userId
+    """)
+    fun getUserWorkoutDays(userId: Long): LiveData<List<String>>
 }
