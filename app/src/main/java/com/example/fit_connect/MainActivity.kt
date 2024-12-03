@@ -1,20 +1,13 @@
 package com.example.fit_connect
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.fit_connect.data.FitConnectDatabase
-import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.user.UserRepository
 import com.example.fit_connect.databinding.ActivityMainBinding
 import com.example.fit_connect.ui.UserActivity
@@ -40,7 +33,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // trigger seeding
-        FitConnectDatabase.getInstance(this)
+        FitConnectDatabase
+            .getInstance(this)
+            .workoutDao()
+            .getAllExerciseTypes()
+            .observe(this) {}
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
