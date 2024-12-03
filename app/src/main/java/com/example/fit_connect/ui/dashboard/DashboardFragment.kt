@@ -53,6 +53,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var repsButton: Button
     private lateinit var exercisesButton: Button
     private lateinit var calendarButton: Button
+    private lateinit var measuresButton: Button
 
     private var userId : Long = 0
 
@@ -97,6 +98,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         exercisesButton = view.findViewById(R.id.exercisesButton)
         calendarButton=view.findViewById(R.id.calendarButton)
         volumeTxt = view.findViewById(R.id.dashboard_workout_volume_value)
+        measuresButton=view.findViewById(R.id.measuresButton)
+
 
         //Initialize Repository
         database = FitConnectDatabase.getInstance(requireContext())
@@ -136,6 +139,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             updateChart(viewModel.weeklyRecords.value ?: listOf(), "reps")
             toggleButtonColors(repsButton)
         }
+        measuresButton.setOnClickListener {
+            findNavController().navigate(R.id.action_dashboardFragment_to_measurementFragment)
+        }
+
 
         // Observe weekly records from ViewModel
         viewModel.weeklyRecords.observe(viewLifecycleOwner) { records ->
