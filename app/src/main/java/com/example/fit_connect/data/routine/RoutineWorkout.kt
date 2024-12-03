@@ -1,0 +1,32 @@
+package com.example.fit_connect.data.routine
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import com.example.fit_connect.data.user.USER_ID_NAME
+import com.example.fit_connect.data.user.User
+
+const val ROUTINE_WORKOUT_TABLE_NAME = "routine_workout"
+const val WORKOUT_ID_NAME = "workout_id"
+
+@Entity(
+    tableName = ROUTINE_WORKOUT_TABLE_NAME,
+    foreignKeys = [
+        ForeignKey(
+            entity = User::class,
+            parentColumns = [USER_ID_NAME],
+            childColumns = [USER_ID_NAME]
+        )
+    ]
+)
+data class RoutineWorkout(
+    val duration: Int,
+    val visible: Boolean,
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = WORKOUT_ID_NAME)
+    val workoutId: Long? = null,
+    @ColumnInfo(name = USER_ID_NAME)
+    val userId: Long
+)

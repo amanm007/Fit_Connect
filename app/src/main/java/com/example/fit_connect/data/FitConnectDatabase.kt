@@ -5,6 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.fit_connect.data.routine.RoutineDao
+import com.example.fit_connect.data.routine.RoutineExercise
+import com.example.fit_connect.data.routine.RoutineExerciseSet
+import com.example.fit_connect.data.routine.RoutineWorkout
 import com.example.fit_connect.data.user.Following
 import com.example.fit_connect.data.user.User
 import com.example.fit_connect.data.user.UserDao
@@ -25,7 +29,10 @@ const val DB_NAME = "fit_connect_db"
         Workout::class,
         ExerciseType::class,
         Exercise::class,
-        ExerciseSet::class
+        ExerciseSet::class,
+        RoutineWorkout::class,
+        RoutineExercise::class,
+        RoutineExerciseSet::class
     ],
     version = 1,
     exportSchema = false
@@ -34,6 +41,7 @@ const val DB_NAME = "fit_connect_db"
 abstract class FitConnectDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun workoutDao(): WorkoutDao
+    abstract fun routineDao(): RoutineDao
 
     companion object {
         @Volatile
