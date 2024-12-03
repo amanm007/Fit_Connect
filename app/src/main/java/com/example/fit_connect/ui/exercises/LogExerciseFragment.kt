@@ -10,7 +10,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.fit_connect.R
 import com.example.fit_connect.data.FitConnectDatabase
 import com.example.fit_connect.data.workout.Exercise
@@ -18,13 +17,11 @@ import com.example.fit_connect.data.workout.ExerciseSet
 import com.example.fit_connect.data.workout.Workout
 import com.example.fit_connect.data.workout.WorkoutRepository
 import com.example.fit_connect.databinding.FragmentLogExerciseBinding
-import com.example.fit_connect.databinding.ItemWorkoutSetBinding
 import com.example.fit_connect.ui.UserActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class LogExerciseFragment : Fragment() {
@@ -124,11 +121,11 @@ class LogExerciseFragment : Fragment() {
     }
 
     private fun saveExerciseAndSetsAsync() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             try {
                 val workout = Workout(
                     timestamp = Date().time,
-                    duration = 0, // REMOVE THIS FIELD
+                    duration = 0, // UPDATE TO GET FROM INPUT
                     visible = false, // REMOVE THIS FIELD
                     userId = userId
                 )

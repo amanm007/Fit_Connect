@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_emptyWorkoutFragment"
             app:destination="@id/emptyWorkoutFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
     </fragment>
 
     <fragment
@@ -39,6 +42,11 @@
         android:name="com.example.fit_connect.ui.exercises.ExercisesFragment"
         android:label="Exercises"
         tools:layout="@layout/fragment_exercises">
+        <argument
+            android:name="routineType"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
         <action
             android:id="@+id/action_exercisesFragment_to_logExerciseFragment"
             app:destination="@id/logExerciseFragment" />

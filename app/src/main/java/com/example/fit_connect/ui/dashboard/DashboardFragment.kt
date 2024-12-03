@@ -36,8 +36,12 @@ import com.github.mikephil.charting.utils.MPPointF
 import org.w3c.dom.Text
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
-
-    private val viewModel: DashboardViewModel by viewModels()
+    private val user_id = "USER_ID"
+    private val viewModel: DashboardViewModel by viewModels {
+        val bundle = (activity as? UserActivity)?.sharedBundle
+        val userId = bundle!!.getLong(user_id)
+        DashboardViewModelFactory(requireActivity().application, userId)
+    }
     private lateinit var chart: BarChart
     private lateinit var durationButton: Button
     private lateinit var volumeButton: Button
@@ -45,7 +49,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private lateinit var exercisesButton: Button
     private lateinit var calendarButton: Button
 
-    private val user_id = "USER_ID"
     private var userId : Long = 0
 
     //Repository

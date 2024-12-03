@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fit_connect.R
 import com.example.fit_connect.data.FitConnectDatabase
@@ -23,6 +24,8 @@ class ExercisesFragment : Fragment() {
     private lateinit var workoutRepo: WorkoutRepository
     private lateinit var allExercises: List<ExerciseType>
     private lateinit var filteredExercises: List<ExerciseType>
+
+    private val args: ExercisesFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,16 +45,37 @@ class ExercisesFragment : Fragment() {
         setupToolbar()
         setupSearchButton()
 
-        workoutRepo.getAllExerciseTypes().observe(viewLifecycleOwner) {
-            allExercises = it
-            filteredExercises = allExercises
+        workoutRepo.getAllExerciseTypes().observe(viewLifecycleOwner) { exercises ->
+            allExercises = exercises
+            filteredExercises = filterExercisesByRoutineType(exercises)
             setupRecyclerView()
         }
     }
 
+    private fun filterExercisesByRoutineType(exercises: List<ExerciseType>): List<ExerciseType> {
+        return when (args.routineType) {
+            "Chest" -> exercises.filter {
+                it.type.category.contains("chest", ignoreCase = true)
+            }
+            "Shoulder" -> exercises.filter {
+                it.type.category.contains("shoulder", ignoreCase = true)
+            }
+            "Leg" -> exercises.filter {
+                it.type.category.contains("leg", ignoreCase = true) ||
+                        it.type.category.contains("quad", ignoreCase = true) ||
+                        it.type.category.contains("hamstring", ignoreCase = true) ||
+                        it.type.category.contains("calf", ignoreCase = true)
+            }
+            else -> exercises
+        }
+    }
+
     private fun setupToolbar() {
-        binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+        binding.toolbar.apply {
+            title = "${args.routineType} Exercises"
+            setNavigationOnClickListener {
+                findNavController().navigateUp()
+            }
         }
     }
 
@@ -92,10 +116,12 @@ class ExercisesFragment : Fragment() {
     }
 
     private fun filterExercises(query: String) {
+        val routineFilteredExercises = filterExercisesByRoutineType(allExercises)
+
         filteredExercises = if (query.isEmpty()) {
-            allExercises
+            routineFilteredExercises
         } else {
-            allExercises.filter { exercise ->
+            routineFilteredExercises.filter { exercise ->
                 exercise.type.displayName.contains(query, ignoreCase = true) ||
                         exercise.type.category.contains(query, ignoreCase = true)
             }
